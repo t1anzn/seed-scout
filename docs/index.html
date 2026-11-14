@@ -69,9 +69,8 @@
     </select>
     <select id="kind" aria-label="Role type">
       <option value="">All role types</option><option value="core">Applied AI / ML</option>
-      <option value="adjacent">Adjacent titles</option><option value="company">YC company leads</option>
+      <option value="adjacent">Adjacent titles</option>
     </select>
-    <label><input id="grad" type="checkbox"> Graduate signal only</label>
   </div>
   <div id="list"></div>
   <div id="empty" hidden></div>
@@ -109,12 +108,11 @@ function isRecent(r) {
 function stateOf(r) { return status[r.url] || "inbox"; }
 
 function visible() {
-  const q = $("q").value.trim().toLowerCase(), loc = $("loc").value, kind = $("kind").value, grad = $("grad").checked;
+  const q = $("q").value.trim().toLowerCase(), loc = $("loc").value, kind = $("kind").value;
   return rows.filter((r) => {
     if (stateOf(r) !== tab) return false;
     if (loc !== "" && String(r.loc_tier) !== loc) return false;
     if (kind && r.match !== kind) return false;
-    if (grad && r.grad_signal !== "yes") return false;
     if (q && !(r.company + " " + r.title + " " + r.location).toLowerCase().includes(q)) return false;
     return true;
   });
@@ -148,10 +146,10 @@ function card(r) {
 
   const chips = el("div", "chips");
   if (isRecent(r)) chips.appendChild(el("span", "chip new", "New"));
-  if (r.grad_signal === "yes") chips.appendChild(el("span", "chip grad", "Graduate signal"));
+  if (r.level === "junior") chips.appendChild(el("span", "chip grad", "Graduate / junior"));
+  else chips.appendChild(el("span", "chip grad", "Graduates invited"));
   chips.appendChild(el("span", "chip", r.location || "Location not stated"));
   if (r.match === "adjacent") chips.appendChild(el("span", "chip", "Adjacent title"));
-  if (r.match === "company") chips.appendChild(el("span", "chip", "Company lead"));
   if (r.min_years_exp !== "" && r.min_years_exp != null) chips.appendChild(el("span", "chip warn", r.min_years_exp + "+ yrs asked"));
   if (r.visa_or_relocation_mentioned === "yes") chips.appendChild(el("span", "chip", "Mentions visa / relocation"));
   if (r.posted) chips.appendChild(el("span", "chip", "Posted " + r.posted));
@@ -213,7 +211,7 @@ async function load() {
     const res = await fetch("jobs.json?t=" + Date.now(), { cache: "no-store" });
     if (!res.ok) throw new Error("HTTP " + res.status);
     const data = await res.json();
-    rows = Array.isArray(data.rows) ? data.rows.filter((r) => r && typeof r === "object" && r.url) : [];
+    rows = Array.isArray(data.rows) ? data.rows.filter((r) => r && typeof r === "object" && r.url && r.match !== "company") : [];
     generated = data.generated || null;
     loadError = "";
   } catch (e) {
@@ -222,7 +220,7 @@ async function load() {
   render();
 }
 
-["q", "loc", "kind", "grad"].forEach((id) => $(id).addEventListener("input", render));
+["q", "loc", "kind"].forEach((id) => $(id).addEventListener("input", render));
 load();
 setInterval(load, REFRESH_MS);
 setInterval(render, 60000);   // keep "x min ago" fresh

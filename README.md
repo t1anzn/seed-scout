@@ -1,7 +1,8 @@
 # Seed Scout
 
-Finds freshly seed-funded startups hiring for Applied AI / ML roles, filtered to
-graduate-friendly roles in the UK and the Netherlands. Runs on GitHub Actions
+Finds freshly seed-funded startups hiring for Applied AI / ML roles. Graduate and
+junior roles only (no senior, mid-level, lead or intern roles), in the UK and the
+Netherlands only. Runs on GitHub Actions
 every 3 hours, posts new roles to Discord, and shows everything on a dashboard.
 
 ## Setup (about 10 minutes)
@@ -26,8 +27,8 @@ every 3 hours, posts new roles to Discord, and shows everything on a dashboard.
 
 ## Changing the filters
 
-Top of `seed_scout.py`: `CORE_ROLE` / `ADJACENT_ROLE` (titles), `SENIOR` and
-`MAX_YEARS_EXP` (level), `LOCATION_TIERS` (places), `FEEDS` (news sources),
+Top of `seed_scout.py`: `CORE_ROLE` / `ADJACENT_ROLE` (titles), `SENIOR`, `JUNIOR`,
+`GRAD_SIGNAL`, `INTERN` and `MAX_YEARS_EXP` (level), `LOCATION_TIERS` (places), `FEEDS` (news sources),
 `SLUG_OVERRIDES` (pin a company's job board when guessing misses it).
 
 Saved / Applied / Dismissed marks on the dashboard are stored in your browser,

@@ -17,8 +17,8 @@ How it works
                   JSON APIs of Greenhouse, Lever, Ashby, Workable and Recruitee.
 4. FILTER         Keeps roles whose title matches Applied AI / ML keywords, on
                   boards with at most --max-open-roles openings ("just started").
-5. EXTRA SOURCES  Hacker News "Who is hiring?" posts that mention a seed round,
-                  and recent-batch YC companies that are hiring with small teams.
+5. EXTRA SOURCES  Hacker News "Who is hiring?" posts that mention a seed round.
+                  (YC company-level leads exist behind --include-yc, off by default.)
 6. OUTPUT         CSV sorted with new-since-last-run rows first.
 
 Usage
@@ -104,16 +104,21 @@ ADJACENT_ROLE = re.compile(
     r"member of technical staff|research engineer|research scientist|data scientist)\b",
     re.I)
 
-# PERSONALISATION: 2027 graduate -> senior and mid-level roles are dropped
-# (title keywords below, or a description asking for more than MAX_YEARS_EXP
-# years of experience). Use --any-level to see everything.
+# PERSONALISATION: graduate / junior roles only. A role is kept when its TITLE
+# says graduate/junior/entry-level (JUNIOR) or its DESCRIPTION clearly invites
+# graduates (GRAD_SIGNAL), and it is not senior/mid/lead (SENIOR), not an
+# internship (INTERN), and doesn't ask for more than MAX_YEARS_EXP years.
+# Use --any-level to see everything.
 SENIOR = re.compile(r"\b(senior|sr|staff|principal|lead|head|director|vp|manager|chief|architect|"
                     r"experienced|expert|mid|mid[- ]level|ii|iii|iv)\b", re.I)
-JUNIOR = re.compile(r"\b(junior|jr|graduate|graduates|grad|new grad|entry[- ]level|intern|internship|"
-                    r"early[- ]career|associate|apprentice|trainee|working student|2027)\b", re.I)
-GRAD_SIGNAL = re.compile(r"\b(new grad(?:uate)?s?|recent graduates?|graduate (?:role|scheme|programme|program)|"
-                         r"graduates|entry[- ]level|early[- ]career|junior|class of 2027|2027 (?:start|grad\w*)|"
-                         r"no (?:prior |previous )?experience (?:required|needed|necessary))\b", re.I)
+JUNIOR = re.compile(r"\b(junior|jr|graduate|graduates|grad|new grad|entry[- ]level|"
+                    r"early[- ]career|associate|trainee|2027)\b", re.I)
+INTERN = re.compile(r"\b(intern|interns|internship|placement|working student|werkstudent|stage|"
+                    r"apprentice|apprenticeship|thesis)\b", re.I)
+# Bare "junior" is deliberately absent: "mentor junior engineers" describes a senior role.
+GRAD_SIGNAL = re.compile(r"\b(new grad(?:uate)?s?|recent graduates?|graduate (?:role|scheme|programme|program|position)|"
+                         r"(?:fresh|recent) grads?|entry[- ]level|early[- ]career|class of 2027|"
+                         r"2027 (?:start|grad\w*)|no (?:prior |previous )?experience (?:required|needed|necessary))\b", re.I)
 MAX_YEARS_EXP = 2
 YEARS = re.compile(r"(\d{1,2})\s*(?:\+|plus)?\s*(?:(?:-|–|to)\s*\d{1,2}\s*\+?\s*)?(?:years?|yrs?)\b"
                    r"[^.\n]{0,60}?\bexperience", re.I)
@@ -217,6 +222,21 @@ def level_of(title: str) -> str:
     if JUNIOR.search(title or ""):
         return "junior"
     return "unspecified"
+
+
+def is_grad_role(title: str, desc: str) -> tuple[bool, str]:
+    """(keep?, grad_signal) under the graduate/junior-only rule."""
+    level = level_of(title)
+    if level == "senior" or INTERN.search(title or ""):
+        return False, ""
+    years = min_years_required(desc)
+    if years is not None and years > MAX_YEARS_EXP:
+        return False, ""
+    if level == "junior":
+        return True, "title"
+    if GRAD_SIGNAL.search(desc or ""):
+        return True, "description"
+    return False, ""
 
 
 def min_years_required(desc: str) -> int | None:
@@ -520,12 +540,13 @@ def rows_from_board(company: dict, board: dict, max_open_roles: int, any_level: 
         if not match or not j["url"]:
             continue
         level, years = level_of(j["title"]), min_years_required(j["desc"])
-        if not any_level and (level == "senior" or (years is not None and years > MAX_YEARS_EXP)):
+        keep, signal = is_grad_role(j["title"], j["desc"])
+        if not keep and not any_level:
             continue
         rows.append({
             "source": "funding-news+" + board["ats"], "company": company["company"],
             "title": j["title"], "match": match, "level": level,
-            "grad_signal": "yes" if level == "junior" or GRAD_SIGNAL.search(j["desc"]) else "",
+            "grad_signal": "yes" if keep else "",
             "min_years_exp": "" if years is None else years,
             "location": j["location"], "loc_tier": location_tier(j["location"]),
             "visa_or_relocation_mentioned": "yes" if VISA.search(j["desc"]) else "",
@@ -561,13 +582,14 @@ def hn_row(hit: dict, thread_date: str, any_level: bool = False) -> dict | None:
     segs = [s.strip() for s in lines[0].split("|")]
     title_seg = next((s for s in segs[1:] if role_match(s)), "")
     level = level_of(title_seg or lines[0])
-    if level == "senior" and not any_level:
+    keep, _ = is_grad_role(title_seg or lines[0], text)
+    if not keep and not any_level:
         return None
     s, e = max(0, fund.start() - 60), min(len(text), fund.end() + 60)
     return {
         "source": "hn-who-is-hiring", "company": segs[0][:60],
         "title": title_seg or (core or adj).group(0), "match": "core" if core else "adjacent",
-        "level": level, "grad_signal": "yes" if level == "junior" or GRAD_SIGNAL.search(text) else "",
+        "level": level, "grad_signal": "yes" if keep else "",
         "location": " | ".join(segs[1:])[:160], "loc_tier": location_tier(lines[0]),
         "visa_or_relocation_mentioned": "yes" if VISA.search(text) else "",
         "posted": to_date(hit.get("created_at")) or thread_date, "open_roles_on_board": "",
@@ -766,7 +788,7 @@ def run(args) -> int:
     if not args.no_hn:
         print("Reading Hacker News 'Who is hiring?'...")
         rows += hn_rows(args.hn_threads, args.any_level)
-    if not args.no_yc:
+    if args.include_yc:      # off by default: company-level leads, not verified roles
         print("Reading YC directory...")
         rows += yc_rows(today)
 
@@ -936,11 +958,12 @@ def selftest() -> int:
     comp = {"company": "Kiln", "amount": "€3M", "announced": "2026-11-10", "headline": "h", "link": "l"}
     board = {"ats": "ashby", "slug": "kiln", "board_match": "exact", "board_url": "b", "jobs": gh + lv + ab + [
         _job("Account Executive", "London", "u9", None)]}
-    rows = rows_from_board(comp, board, 20)
+    rows = rows_from_board(comp, board, 20, any_level=True)
     eq([(r["title"], r["match"]) for r in rows],
        [("Applied AI Engineer", "core"), ("ML Engineer", "core"), ("Founding Engineer", "adjacent")], "board rows")
     eq(rows[0]["visa_or_relocation_mentioned"], "yes", "visa flag")
-    eq(rows_from_board(comp, board, 3), [], "too many open roles")
+    eq(rows_from_board(comp, board, 3, any_level=True), [], "too many open roles")
+    eq(rows_from_board(comp, board, 20), [], "no grad signal -> dropped")
 
     eq(level_of("ML Engineer II"), "senior", "level II")
     eq(min_years_required("We need 3-5 years of experience in ML"), 3, "years range")
@@ -955,6 +978,15 @@ def selftest() -> int:
     r2 = rows_from_board(comp, b2, 20)
     eq([(r["url"], r["grad_signal"], r["min_years_exp"]) for r in r2], [("s3", "yes", ""), ("s5", "yes", 1)], "level filter")
     eq(len(rows_from_board(comp, b2, 20, any_level=True)), 5, "any level")
+    for t, d, want in [("Lead ML Engineer", "new grads welcome", False),
+                       ("Tech Lead, Applied AI", "", False),
+                       ("Machine Learning Intern", "graduates", False),
+                       ("ML Engineer", "You will mentor junior engineers.", False),
+                       ("ML Engineer", "Great for recent graduates.", True),
+                       ("Junior ML Engineer", "", True),
+                       ("Graduate AI Engineer", "3+ years of experience required", False),
+                       ("Associate Machine Learning Engineer", "", True)]:
+        eq(is_grad_role(t, d)[0], want, "is_grad_role(%r, %r)" % (t, d))
     msgs = discord_messages(r2)
     eq((len(msgs), "<s3>" in msgs[0], "@" in msgs[0]), (1, True, False), "discord one msg")
     many = [dict(r2[0], url="https://example.com/" + "x" * 150 + str(i)) for i in range(40)]
@@ -962,10 +994,11 @@ def selftest() -> int:
     eq((all(len(m) <= 1900 for m in msgs), "10 more" in msgs[-1], len(msgs) > 1), (True, True, True), "discord chunking")
     eq(discord_messages([]), [], "discord empty")
     eq(hn_row({"comment_text": "Kiln | Senior ML Engineer | London<p>seed round"}, ""), None, "hn senior")
+    eq(hn_row({"comment_text": "Kiln | ML Engineer | London<p>seed round"}, ""), None, "hn no grad signal")
 
     hn = {"objectID": "42", "parent_id": 7, "created_at": "2026-11-02T15:00:00Z",
           "comment_text": "Kiln | Applied AI Engineer | Amsterdam | ONSITE | Visa<p>We just closed a $3M seed round "
-                          "and are hiring our first ML engineers."}
+                          "and are hiring our first ML engineers. New grads welcome."}
     r = hn_row(hn, "2026-11-01")
     eq((r["company"], r["title"], r["match"], r["loc_tier"], r["url"]),
        ("Kiln", "Applied AI Engineer", "core", 0, "https://news.ycombinator.com/item?id=42"), "hn row")
@@ -998,14 +1031,14 @@ def main() -> int:
                    help="keep re-checking a company's job board this long after its round (default 180)")
     p.add_argument("--max-open-roles", type=int, default=20,
                    help="skip boards with more openings than this (default 20)")
-    p.add_argument("--core-only", action="store_true", help="only Applied AI / ML titles, no adjacent titles or YC leads")
+    p.add_argument("--core-only", action="store_true", help="only Applied AI / ML titles, no adjacent titles")
     p.add_argument("--any-location", action="store_true", help="don't restrict to the Netherlands / UK")
     p.add_argument("--any-level", action="store_true", help="keep senior / mid-level roles too")
     p.add_argument("--json", default="", help="also write results as JSON (for the dashboard), e.g. docs/jobs.json")
     p.add_argument("--discord-webhook", default="", help="Discord webhook URL (or set DISCORD_WEBHOOK_URL)")
     p.add_argument("--no-news", action="store_true")
     p.add_argument("--no-hn", action="store_true")
-    p.add_argument("--no-yc", action="store_true")
+    p.add_argument("--include-yc", action="store_true", help="add YC company-level leads (off by default)")
     p.add_argument("--hn-threads", type=int, default=2, help="how many monthly HN threads to read (default 2)")
     p.add_argument("--workers", type=int, default=6)
     p.add_argument("--selftest", action="store_true")
