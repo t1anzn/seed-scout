@@ -21,6 +21,9 @@ jobs:
       - name: Run scraper
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          REED_API_KEY: ${{ secrets.REED_API_KEY }}
+          ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}
+          ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
         run: python seed_scout.py --out docs/seed_jobs.csv --json docs/jobs.json --state seed_scout_state.json
       - name: Save results
         run: |

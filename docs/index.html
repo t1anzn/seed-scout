@@ -67,10 +67,16 @@
     <select id="loc" aria-label="Location">
       <option value="">All locations</option><option value="0">Netherlands</option><option value="1">UK</option>
     </select>
+    <select id="src" aria-label="Source">
+      <option value="">All sources</option><option value="startup-board">Startup job boards</option>
+      <option value="arbeitnow">Arbeitnow</option><option value="reed">Reed</option>
+      <option value="adzuna">Adzuna</option><option value="hn">Hacker News</option>
+    </select>
     <select id="kind" aria-label="Role type">
       <option value="">All role types</option><option value="core">Applied AI / ML</option>
       <option value="adjacent">Adjacent titles</option>
     </select>
+    <label><input id="startup" type="checkbox"> Startups only</label>
   </div>
   <div id="list"></div>
   <div id="empty" hidden></div>
@@ -105,14 +111,19 @@ function isRecent(r) {
   const d = new Date(r.first_seen + "T00:00:00Z").getTime();
   return !isNaN(d) && Date.now() - d < 3 * 86400000;
 }
-function stateOf(r) { return status[r.url] || "inbox"; }
+function idOf(r) { return r.key || r.url; }
+function stateOf(r) { return status[idOf(r)] || "inbox"; }
+const SOURCES = { "startup-board": "Startup job board", arbeitnow: "via Arbeitnow", reed: "via Reed", adzuna: "via Adzuna", hn: "via Hacker News" };
 
 function visible() {
   const q = $("q").value.trim().toLowerCase(), loc = $("loc").value, kind = $("kind").value;
+  const src = $("src").value, startup = $("startup").checked;
   return rows.filter((r) => {
     if (stateOf(r) !== tab) return false;
     if (loc !== "" && String(r.loc_tier) !== loc) return false;
     if (kind && r.match !== kind) return false;
+    if (src && r.source !== src) return false;
+    if (startup && r.startup_signal !== "yes") return false;
     if (q && !(r.company + " " + r.title + " " + r.location).toLowerCase().includes(q)) return false;
     return true;
   });
@@ -136,7 +147,7 @@ function card(r) {
     b.type = "button";
     b.setAttribute("aria-pressed", String(st === s));
     b.addEventListener("click", () => {
-      if (status[r.url] === s) delete status[r.url]; else status[r.url] = s;   // click again to undo
+      if (status[idOf(r)] === s) delete status[idOf(r)]; else status[idOf(r)] = s;   // click again to undo
       saveStatus(); render();
     });
     actions.appendChild(b);
@@ -145,15 +156,18 @@ function card(r) {
   c.appendChild(top);
 
   const chips = el("div", "chips");
-  if (isRecent(r)) chips.appendChild(el("span", "chip new", "New"));
+  if (isRecent(r)) chips.appendChild(el("span", "chip warn", "New"));
   if (r.level === "junior") chips.appendChild(el("span", "chip grad", "Graduate / junior"));
   else chips.appendChild(el("span", "chip grad", "Graduates invited"));
+  if (r.startup_signal === "yes") chips.appendChild(el("span", "chip new", "Startup"));
   chips.appendChild(el("span", "chip", r.location || "Location not stated"));
+  if (r.salary) chips.appendChild(el("span", "chip", r.salary));
   if (r.match === "adjacent") chips.appendChild(el("span", "chip", "Adjacent title"));
   if (r.min_years_exp !== "" && r.min_years_exp != null) chips.appendChild(el("span", "chip warn", r.min_years_exp + "+ yrs asked"));
   if (r.visa_or_relocation_mentioned === "yes") chips.appendChild(el("span", "chip", "Mentions visa / relocation"));
   if (r.posted) chips.appendChild(el("span", "chip", "Posted " + r.posted));
   if (r.open_roles_on_board !== "" && r.open_roles_on_board != null) chips.appendChild(el("span", "chip", r.open_roles_on_board + " open roles"));
+  if (SOURCES[r.source]) chips.appendChild(el("span", "chip", SOURCES[r.source]));
   if (r.board_match === "partial") chips.appendChild(el("span", "chip warn", "Check it's the right company"));
   c.appendChild(chips);
 
@@ -201,7 +215,7 @@ function render() {
   empty.hidden = shown.length > 0;
   if (!shown.length) {
     empty.textContent = !generated ? (loadError || "Loading…")
-      : rows.length === 0 ? "The scraper ran but found no matching roles yet. The watchlist builds up over the first week or two."
+      : rows.length === 0 ? "The scraper ran but found no matching roles. Check the run log on GitHub for unreachable sources."
       : "Nothing here with these filters.";
   }
 }
@@ -220,7 +234,7 @@ async function load() {
   render();
 }
 
-["q", "loc", "kind"].forEach((id) => $(id).addEventListener("input", render));
+["q", "loc", "kind", "src", "startup"].forEach((id) => $(id).addEventListener("input", render));
 load();
 setInterval(load, REFRESH_MS);
 setInterval(render, 60000);   // keep "x min ago" fresh

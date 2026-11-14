@@ -1,49 +1,46 @@
 #!/usr/bin/env python3
 """
-seed_scout.py - find freshly seed-funded startups that have just started hiring
-for Applied AI / Machine Learning roles.
+seed_scout.py - find graduate / junior Applied AI and Machine Learning roles in
+the UK and the Netherlands, with startups first.
 
-Standard library only (Python 3.9+). No API keys.
+Standard library only (Python 3.9+).
 
-How it works
-------------
-1. FUNDING NEWS   Reads RSS feeds (TechCrunch, EU-Startups, Silicon Canals, ...,
-                  plus Google News searches) and keeps headlines about seed /
-                  pre-seed rounds. The company name is pulled out of the headline.
-2. WATCHLIST      Each company is remembered in a state file for --watch-days
-                  (default 180), because hiring usually starts weeks after the
-                  announcement. Every run re-checks the whole watchlist.
-3. JOB BOARDS     For each company, guesses its job-board slug and asks the public
-                  JSON APIs of Greenhouse, Lever, Ashby, Workable and Recruitee.
-4. FILTER         Keeps roles whose title matches Applied AI / ML keywords, on
-                  boards with at most --max-open-roles openings ("just started").
-5. EXTRA SOURCES  Hacker News "Who is hiring?" posts that mention a seed round.
-                  (YC company-level leads exist behind --include-yc, off by default.)
-6. OUTPUT         CSV sorted with new-since-last-run rows first.
+Where the roles come from
+-------------------------
+ROLE-FIRST SOURCES (search for the role directly)
+  * Arbeitnow   free job API (UK + Europe boards), no key needed
+  * Reed        UK job board API       - needs a free key  (REED_API_KEY)
+  * Adzuna      UK + NL job aggregator - needs free keys   (ADZUNA_APP_ID / ADZUNA_APP_KEY)
+  * Hacker News "Who is hiring?" posts that invite graduates / juniors
+COMPANY-FIRST SOURCES (find startups, then read their job boards)
+  * Funding news (seed + Series A headlines) -> company names, watched 180 days
+  * YC directory: hiring companies located in the UK / Netherlands
+  * EXTRA_COMPANIES: names you add by hand
+  Each company's board is looked up on Ashby, Greenhouse, Lever, Workable, Recruitee.
+
+Every role then has to pass the same filters: Applied AI / ML title, graduate or
+junior level (no senior / mid / lead / intern), UK or Netherlands.
 
 Usage
 -----
-    python3 seed_scout.py                 # full run -> seed_jobs.csv
-    python3 seed_scout.py --core-only --json docs/jobs.json
-    DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/... python3 seed_scout.py
-    python3 seed_scout.py --selftest      # offline tests, no network
+    python3 seed_scout.py --selftest          # offline tests, no network
+    python3 seed_scout.py --json docs/jobs.json
+    Keys and the Discord webhook are read from environment variables:
+    REED_API_KEY, ADZUNA_APP_ID, ADZUNA_APP_KEY, DISCORD_WEBHOOK_URL
 
-Run it daily (cron / Task Scheduler): RSS feeds only hold the latest ~20 items,
-so the watchlist is built up over time.
-
-Known limits (read these)
--------------------------
-* Company names come from headline heuristics and board slugs are guesses, so
-  expect some misses and the odd wrong-company match. Check `board_match`
-  ("exact" vs "partial") and the URL. Fix misses via SLUG_OVERRIDES below.
-* Companies with a careers page on their own site / Notion / LinkedIn only are
-  not found by step 3.
-* YC rows are company-level leads (the role is not verified).
+Known limits
+------------
+* Reed and Adzuna rows include non-startups; rows with a startup signal sort first.
+* Graduate boards without an API (TargetJobs, Bright Network, Gradcracker,
+  Otta / Welcome to the Jungle) are not covered, except where Adzuna re-lists them.
+* Company names from headlines and job-board slugs are guesses: expect misses and
+  the odd wrong-company match (`board_match` = "partial"). Pin with SLUG_OVERRIDES.
 """
 
 from __future__ import annotations
 
 import argparse
+import base64
 import csv
 import datetime as dt
 import html
@@ -65,7 +62,7 @@ from email.utils import parsedate_to_datetime
 # CONFIG - edit freely
 # ----------------------------------------------------------------------------
 
-USER_AGENT = "seed-scout/1.0 (personal job-search script)"
+USER_AGENT = "seed-scout/2.0 (personal job-search script)"
 
 # (name, url, is_google_news). Feeds that fail are skipped with a warning.
 FEEDS = [
@@ -78,10 +75,9 @@ FEEDS = [
     ("Tech Funding News", "https://techfundingnews.com/feed/", False),
 ]
 GOOGLE_NEWS_QUERIES = [
-    '"seed round" AI startup raises when:14d',
-    '"pre-seed" AI startup raises when:14d',
-    '"seed" AI startup Amsterdam OR Netherlands raises when:30d',
-    '"seed" AI startup London raises when:14d',
+    '"seed round" AI startup London OR UK raises when:14d',
+    '"Series A" AI startup London OR UK raises when:14d',
+    '"seed" OR "Series A" AI startup Amsterdam OR Netherlands raises when:30d',
 ]
 for _q in GOOGLE_NEWS_QUERIES:
     FEEDS.append((
@@ -135,6 +131,25 @@ LOCATION_TIERS = [
 
 VISA = re.compile(r"\b(visa|sponsorship|sponsor|relocation)\b", re.I)
 
+# Text that suggests the employer is a startup (used for sorting and a dashboard tag).
+STARTUP = re.compile(r"\b(start-?up|pre-?seed|seed[- ](?:stage|round|funded|funding)|series [ab]\b|"
+                     r"venture[- ]backed|vc[- ]backed|early[- ]stage|founding team|scale-?up|"
+                     r"y combinator|yc[- ]backed|techstars|entrepreneur first)", re.I)
+# Recruitment agencies are dropped from Reed / Adzuna / Arbeitnow results.
+AGENCY = re.compile(r"\b(recruitment|recruiting|recruiters?|staffing|resourcing|personnel|"
+                    r"executive search|talent (?:partners|solutions|group|acquisition))\b", re.I)
+
+# Reed searches: (keywords, use Reed's own "graduate" filter). UK only.
+REED_QUERIES = [("AI engineer", True), ("machine learning", True), ("applied AI", True),
+                ("junior AI engineer", False), ("junior machine learning engineer", False)]
+REED_DIRECT_EMPLOYERS_ONLY = True
+# Adzuna searches, run for the UK and the Netherlands. The free tier is about
+# 1,000 calls a month, so these run once a day (5 queries x 2 countries = 10 calls).
+ADZUNA_QUERIES = ["graduate AI engineer", "junior AI engineer", "graduate machine learning engineer",
+                  "junior machine learning engineer", "graduate applied AI"]
+# Companies you want checked on every run, e.g. ["Synthesia", "PolyAI"].
+EXTRA_COMPANIES: list[str] = []
+
 # If a company's board isn't found by guessing, pin it here:
 #   "company name (lowercase)": ("ashby" | "greenhouse" | "lever" | "lever_eu" |
 #                                "workable" | "recruitee", "slug")
@@ -145,11 +160,13 @@ SLUG_OVERRIDES: dict[str, tuple[str, str]] = {}
 # ----------------------------------------------------------------------------
 
 
-def http_get(url: str, timeout: int = 20, retries: int = 2) -> bytes | None:
+def http_get(url: str, timeout: int = 20, retries: int = 2, headers: dict | None = None) -> bytes | None:
     """GET url. Returns body, or None on any failure (never raises)."""
     for attempt in range(retries + 1):
         try:
-            req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT, "Accept": "*/*"})
+            h = {"User-Agent": USER_AGENT, "Accept": "*/*"}
+            h.update(headers or {})
+            req = urllib.request.Request(url, headers=h)
             with urllib.request.urlopen(req, timeout=timeout) as resp:
                 return resp.read()
         except urllib.error.HTTPError as e:
@@ -162,8 +179,8 @@ def http_get(url: str, timeout: int = 20, retries: int = 2) -> bytes | None:
     return None
 
 
-def get_json(url: str):
-    body = http_get(url)
+def get_json(url: str, headers: dict | None = None):
+    body = http_get(url, headers=headers)
     if not body:
         return None
     try:
@@ -198,7 +215,10 @@ def to_date(v) -> str:
         except (ValueError, OverflowError, OSError):
             return ""
     m = re.match(r"\d{4}-\d{2}-\d{2}", str(v))
-    return m.group(0) if m else ""
+    if m:
+        return m.group(0)
+    m = re.match(r"(\d{2})/(\d{2})/(\d{4})", str(v))      # Reed: dd/mm/yyyy
+    return "%s-%s-%s" % (m.group(3), m.group(2), m.group(1)) if m else ""
 
 
 def location_tier(loc: str) -> int:
@@ -250,8 +270,8 @@ def min_years_required(desc: str) -> int | None:
 # 1. Funding news -> company names
 # ----------------------------------------------------------------------------
 
-SEED = re.compile(r"\b(pre[- ]?seed|seed)\b", re.I)
-LATER_ROUND = re.compile(r"\bseries\s+[a-z]\b|\bipo\b|\bgrowth round\b", re.I)
+SEED = re.compile(r"\b(pre[- ]?seed|seed|series\s+a)\b", re.I)
+LATER_ROUND = re.compile(r"\bseries\s+[b-z]\b|\bipo\b|\bgrowth round\b", re.I)
 AMOUNT = re.compile(r"(?:US)?[$€£]\s?\d+(?:[.,]\d+)?\s?(?:k|m|mn|million|bn|billion)?\b", re.I)
 VERB = re.compile(
     r"\b(raises|raised|secures|secured|lands|landed|bags|bagged|closes|closed|nabs|"
@@ -544,7 +564,8 @@ def rows_from_board(company: dict, board: dict, max_open_roles: int, any_level: 
         if not keep and not any_level:
             continue
         rows.append({
-            "source": "funding-news+" + board["ats"], "company": company["company"],
+            "source": "startup-board", "company": company["company"],
+            "startup_signal": "yes", "salary": "",
             "title": j["title"], "match": match, "level": level,
             "grad_signal": "yes" if keep else "",
             "min_years_exp": "" if years is None else years,
@@ -559,11 +580,130 @@ def rows_from_board(company: dict, board: dict, max_open_roles: int, any_level: 
 
 
 # ----------------------------------------------------------------------------
-# 5a. Hacker News "Who is hiring?"
+# Role-first sources
 # ----------------------------------------------------------------------------
 
+
+def agg_row(source: str, company: str, title: str, location: str, url: str, posted, desc: str,
+            salary: str = "", grad_hint: bool = False, any_level: bool = False) -> dict | None:
+    """Apply the role / level / agency filters to one aggregator listing."""
+    title, company, desc = strip_html(title), strip_html(company), strip_html(desc)
+    match = role_match(title)
+    if not match or not url or AGENCY.search(company):
+        return None
+    level, years = level_of(title), min_years_required(desc)
+    keep, _ = is_grad_role(title, desc)
+    if not keep and grad_hint:      # the source itself tagged the job as a graduate role
+        keep = level != "senior" and not INTERN.search(title) and not (years is not None and years > MAX_YEARS_EXP)
+    if not keep and not any_level:
+        return None
+    return {
+        "source": source, "company": company or "Unknown company", "title": title, "match": match,
+        "level": level, "grad_signal": "yes" if keep else "", "min_years_exp": "" if years is None else years,
+        "location": location, "loc_tier": location_tier(location),
+        "visa_or_relocation_mentioned": "yes" if VISA.search(desc) else "",
+        "posted": to_date(posted), "open_roles_on_board": "",
+        "startup_signal": "yes" if STARTUP.search(desc) else "", "salary": salary,
+        "funding_amount": "", "funding_date": "", "funding_headline": "", "funding_link": "",
+        "board_match": "", "url": url,
+    }
+
+
+def _salary(lo, hi, symbol: str) -> str:
+    try:
+        nums = sorted({int(float(x)) for x in (lo, hi) if x not in (None, "", 0)})
+    except (TypeError, ValueError):
+        return ""
+    return "–".join("%s%s" % (symbol, format(n, ",")) for n in nums)
+
+
+# --- Arbeitnow (no key) ---
+
+def arbeitnow_row(j: dict, uk_site: bool, any_level: bool = False) -> dict | None:
+    loc = j.get("location") or ""
+    if uk_site and location_tier(loc) >= len(LOCATION_TIERS):
+        loc = (loc + ", UK").strip(", ")
+    if j.get("remote") and "remote" not in loc.lower():
+        loc += " (Remote)"
+    return agg_row("arbeitnow", j.get("company_name") or "", j.get("title") or "", loc, j.get("url") or "",
+                   j.get("created_at"), j.get("description") or "", any_level=any_level)
+
+
+def arbeitnow_rows(any_level: bool = False) -> list[dict] | None:
+    rows, ok = [], False
+    for base, uk_site, pages in (("https://www.arbeitnow.co.uk/api/job-board-api", True, 8),
+                                 ("https://www.arbeitnow.com/api/job-board-api", False, 4)):
+        for page in range(1, pages + 1):
+            data = get_json("%s?page=%d" % (base, page))
+            items = data.get("data") if isinstance(data, dict) else None
+            if not isinstance(items, list) or not items:
+                break
+            ok = True
+            rows += [r for r in (arbeitnow_row(j, uk_site, any_level) for j in items if isinstance(j, dict)) if r]
+            time.sleep(0.5)
+    return rows if ok else None
+
+
+# --- Reed (UK, free key) ---
+
+def reed_row(j: dict, grad_hint: bool, any_level: bool = False) -> dict | None:
+    loc = (str(j.get("locationName") or "") + ", UK").strip(", ")
+    return agg_row("reed", j.get("employerName") or "", j.get("jobTitle") or "", loc, j.get("jobUrl") or "",
+                   j.get("date"), j.get("jobDescription") or "",
+                   salary=_salary(j.get("minimumSalary"), j.get("maximumSalary"), "£"),
+                   grad_hint=grad_hint, any_level=any_level)
+
+
+def reed_rows(key: str, any_level: bool = False) -> list[dict] | None:
+    auth = {"Authorization": "Basic " + base64.b64encode((key + ":").encode()).decode()}
+    rows, ok = [], False
+    for keywords, grad in REED_QUERIES:
+        params = {"keywords": keywords, "resultsToTake": 100}
+        if grad:
+            params["graduate"] = "true"
+        if REED_DIRECT_EMPLOYERS_ONLY:
+            params["postedByDirectEmployer"] = "true"
+        data = get_json("https://www.reed.co.uk/api/1.0/search?" + urllib.parse.urlencode(params), headers=auth)
+        items = data.get("results") if isinstance(data, dict) else None
+        if not isinstance(items, list):
+            continue
+        ok = True
+        rows += [r for r in (reed_row(j, grad, any_level) for j in items if isinstance(j, dict)) if r]
+    return rows if ok else None
+
+
+# --- Adzuna (UK + NL, free keys) ---
+
+def adzuna_row(j: dict, country: str, any_level: bool = False) -> dict | None:
+    suffix, symbol = (", Netherlands", "€") if country == "nl" else (", UK", "£")
+    loc = (str((j.get("location") or {}).get("display_name") or "") + suffix).strip(", ")
+    predicted = str(j.get("salary_is_predicted", "0")) == "1"
+    return agg_row("adzuna", (j.get("company") or {}).get("display_name") or "", j.get("title") or "", loc,
+                   j.get("redirect_url") or "", j.get("created"), j.get("description") or "",
+                   salary="" if predicted else _salary(j.get("salary_min"), j.get("salary_max"), symbol),
+                   any_level=any_level)
+
+
+def adzuna_rows(app_id: str, app_key: str, any_level: bool = False) -> list[dict] | None:
+    rows, ok = [], False
+    for country in ("nl", "gb"):
+        for q in ADZUNA_QUERIES:
+            url = "https://api.adzuna.com/v1/api/jobs/%s/search/1?" % country + urllib.parse.urlencode({
+                "app_id": app_id, "app_key": app_key, "what": q, "results_per_page": 50,
+                "max_days_old": 30, "sort_by": "date", "content-type": "application/json"})
+            data = get_json(url)
+            items = data.get("results") if isinstance(data, dict) else None
+            if not isinstance(items, list):
+                continue
+            ok = True
+            rows += [r for r in (adzuna_row(j, country, any_level) for j in items if isinstance(j, dict)) if r]
+    return rows if ok else None
+
+
+# --- Hacker News "Who is hiring?" ---
+
 HN_API = "https://hn.algolia.com/api/v1/"
-HN_FUNDING = re.compile(r"\b(pre[- ]?seed|seed[- ]stage|seed round|seed funding|seed|"
+HN_FUNDING = re.compile(r"\b(pre[- ]?seed|seed[- ]stage|seed round|seed funding|series a|"
                         r"just raised|recently raised|newly funded)\b", re.I)
 
 
@@ -572,9 +712,6 @@ def hn_row(hit: dict, thread_date: str, any_level: bool = False) -> dict | None:
     text = strip_html(re.sub(r"<p>", "\n", raw, flags=re.I))
     lines = [ln.strip() for ln in text.split("\n") if ln.strip()]
     if not lines:
-        return None
-    fund = HN_FUNDING.search(text)
-    if not fund or re.search(r"\bseries\s+[b-z]\b", text, re.I):
         return None
     core, adj = CORE_ROLE.search(text), ADJACENT_ROLE.search(text)
     if not (core or adj):
@@ -585,31 +722,33 @@ def hn_row(hit: dict, thread_date: str, any_level: bool = False) -> dict | None:
     keep, _ = is_grad_role(title_seg or lines[0], text)
     if not keep and not any_level:
         return None
-    s, e = max(0, fund.start() - 60), min(len(text), fund.end() + 60)
+    fund, snippet = HN_FUNDING.search(text), ""
+    if fund:
+        s, e = max(0, fund.start() - 60), min(len(text), fund.end() + 60)
+        snippet = "…" + " ".join(text[s:e].split()) + "…"
     return {
-        "source": "hn-who-is-hiring", "company": segs[0][:60],
+        "source": "hn", "company": segs[0][:60],
         "title": title_seg or (core or adj).group(0), "match": "core" if core else "adjacent",
-        "level": level, "grad_signal": "yes" if keep else "",
+        "level": level, "grad_signal": "yes" if keep else "", "min_years_exp": "",
         "location": " | ".join(segs[1:])[:160], "loc_tier": location_tier(lines[0]),
         "visa_or_relocation_mentioned": "yes" if VISA.search(text) else "",
         "posted": to_date(hit.get("created_at")) or thread_date, "open_roles_on_board": "",
-        "funding_amount": (AMOUNT.search(text[s:e]) or [""])[0] if AMOUNT.search(text[s:e]) else "",
-        "funding_date": "", "funding_headline": "…" + " ".join(text[s:e].split()) + "…",
+        "startup_signal": "yes" if fund or STARTUP.search(text) else "", "salary": "",
+        "funding_amount": "", "funding_date": "", "funding_headline": snippet,
         "funding_link": "", "board_match": "",
         "url": "https://news.ycombinator.com/item?id=%s" % hit.get("objectID", ""),
     }
 
 
-def hn_rows(n_threads: int = 2, any_level: bool = False) -> list[dict]:
+def hn_rows(n_threads: int = 2, any_level: bool = False) -> list[dict] | None:
     data = get_json(HN_API + "search_by_date?tags=story,author_whoishiring&hitsPerPage=12")
     if not data:
-        print("  ! Hacker News API unreachable", file=sys.stderr)
-        return []
+        return None
     threads = [h for h in data.get("hits", []) if "who is hiring" in (h.get("title") or "").lower()]
     rows, seen = [], set()
     for th in threads[:n_threads]:
         sid = th.get("objectID")
-        for q in ("seed", "pre-seed", "just raised"):
+        for q in ("graduate", "new grad", "junior", "entry level"):
             res = get_json(HN_API + "search?" + urllib.parse.urlencode(
                 {"query": q, "tags": "comment,story_%s" % sid, "hitsPerPage": 500})) or {}
             for hit in res.get("hits", []):
@@ -624,11 +763,8 @@ def hn_rows(n_threads: int = 2, any_level: bool = False) -> list[dict]:
 
 
 # ----------------------------------------------------------------------------
-# 5b. YC companies (company-level leads)
+# Company-first sources
 # ----------------------------------------------------------------------------
-
-YC_AI = re.compile(r"\b(ai|a\.i\.|artificial intelligence|machine learning|ml|llms?|"
-                   r"generative ai|ai agents?|deep learning|computer vision|nlp)\b", re.I)
 
 
 def yc_batch_year(batch: str) -> int | None:
@@ -639,37 +775,34 @@ def yc_batch_year(batch: str) -> int | None:
     return 2000 + int(m.group(1)) if m else None
 
 
-def yc_row(c: dict, min_year: int, max_team: int) -> dict | None:
-    year = yc_batch_year(c.get("batch", ""))
-    team = c.get("team_size")
-    if year is None or year < min_year or c.get("isHiring") is False:
+def yc_company(c: dict, min_year: int, max_team: int = 200) -> dict | None:
+    """A hiring YC company located in the UK / Netherlands -> watchlist entry."""
+    year, team = yc_batch_year(c.get("batch", "")), c.get("team_size")
+    if not c.get("name") or year is None or year < min_year or c.get("isHiring") is False:
         return None
     if isinstance(team, (int, float)) and team > max_team:
         return None
-    blob = " ".join([c.get("one_liner") or "", " ".join(c.get("tags") or []),
-                     " ".join(c.get("industries") or [])])
-    if not YC_AI.search(blob) or not c.get("slug"):
+    loc = " ".join([str(c.get("all_locations") or ""), " ".join(c.get("regions") or [])])
+    if location_tier(loc) >= len(LOCATION_TIERS):
         return None
-    loc = c.get("all_locations") or ", ".join(c.get("regions") or [])
-    return {
-        "source": "yc-directory", "company": c.get("name", ""),
-        "title": "(company-level lead - check jobs page) " + (c.get("one_liner") or "")[:90],
-        "match": "company", "level": "unspecified", "location": loc, "loc_tier": location_tier(loc),
-        "visa_or_relocation_mentioned": "", "posted": "", "open_roles_on_board": "",
-        "funding_amount": "", "funding_date": "",
-        "funding_headline": "YC %s, team size %s" % (c.get("batch", "?"), team if team is not None else "?"),
-        "funding_link": c.get("website") or "", "board_match": "",
-        "url": "https://www.ycombinator.com/companies/%s/jobs" % c["slug"],
-    }
+    return {"company": c["name"], "amount": "", "announced": "",
+            "headline": "YC %s company" % c.get("batch", ""), "link": c.get("website") or ""}
 
 
-def yc_rows(today: dt.date, max_team: int = 15) -> list[dict]:
+def yc_companies(today: dt.date) -> list[dict] | None:
     data = get_json("https://yc-oss.github.io/api/companies/hiring.json")
     if not isinstance(data, list):
-        print("  ! YC directory API unreachable", file=sys.stderr)
-        return []
-    rows = [yc_row(c, today.year - 1, max_team) for c in data if isinstance(c, dict)]
-    return [r for r in rows if r]
+        return None
+    return [x for x in (yc_company(c, today.year - 4) for c in data if isinstance(c, dict)) if x]
+
+
+def board_rows(companies: list[dict], max_open_roles: int, any_level: bool, workers: int) -> list[dict]:
+    rows: list[dict] = []
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        for comp, boards in zip(companies, pool.map(lambda c: find_boards(c["company"]), companies)):
+            for b in boards:
+                rows += rows_from_board(comp, b, max_open_roles, any_level)
+    return rows
 
 
 # ----------------------------------------------------------------------------
@@ -678,7 +811,8 @@ def yc_rows(today: dt.date, max_team: int = 15) -> list[dict]:
 
 FIELDS = ["is_new", "first_seen", "source", "company", "title", "match", "level", "grad_signal", "min_years_exp", "location",
           "loc_tier", "visa_or_relocation_mentioned", "posted", "open_roles_on_board",
-          "funding_amount", "funding_date", "funding_headline", "funding_link", "board_match", "url"]
+          "startup_signal", "salary",
+          "funding_amount", "funding_date", "funding_headline", "funding_link", "board_match", "url", "key"]
 
 
 def load_state(path: str) -> dict:
@@ -689,19 +823,41 @@ def load_state(path: str) -> dict:
             st.setdefault("companies", {})
             st.setdefault("seen", {})
             st.setdefault("notified", [])
+            st.setdefault("cache", {})
             return st
     except (OSError, ValueError):
         pass
-    return {"companies": {}, "seen": {}, "notified": []}
+    return {"companies": {}, "seen": {}, "notified": [], "cache": {}}
+
+
+def row_key(r: dict) -> str:
+    """Stable identity for a role across sources and runs: company + title."""
+    c = re.sub(r"[^a-z0-9]+", "", (r.get("company") or "").lower())
+    t = re.sub(r"[^a-z0-9]+", "", (r.get("title") or "").lower())
+    return "%s|%s" % (c, t) if c and t and c != "unknowncompany" else r["url"]
+
+
+def cached(state: dict, name: str, hours: float, fn, now: float | None = None) -> list[dict]:
+    """Run fn() at most once per `hours`; otherwise (or if fn fails) reuse the stored rows."""
+    now = time.time() if now is None else now
+    c = state["cache"].get(name)
+    if c and now - c.get("at", 0) < hours * 3600:
+        return c.get("rows", [])
+    rows = fn()
+    if rows is None:
+        print("  ! %s unreachable%s" % (name, " - reusing last results" if c else ""), file=sys.stderr)
+        return c.get("rows", []) if c else []
+    state["cache"][name] = {"at": now, "rows": rows}
+    return rows
 
 
 def sort_key(r: dict):
     return (r["is_new"] != "yes",
-            {"core": 0, "adjacent": 1, "company": 2}.get(r["match"], 3),
-            r.get("grad_signal") != "yes",
+            r.get("startup_signal") != "yes",
+            {"core": 0, "adjacent": 1}.get(r["match"], 2),
             r["loc_tier"],
             {"junior": 0, "unspecified": 1, "senior": 2}[r["level"]],
-            "".join(chr(255 - ord(c)) if ord(c) < 256 else c for c in (r["funding_date"] or r["posted"] or "")))
+            "".join(chr(255 - ord(c)) if ord(c) < 256 else c for c in (r["posted"] or r["funding_date"] or "")))
 
 
 def http_post_json(url: str, payload: dict) -> bool:
@@ -718,9 +874,10 @@ def discord_messages(rows: list[dict], limit: int = 30) -> list[str]:
     """Format rows as Discord messages, each under the 2000-character limit."""
     blocks = []
     for r in rows[:limit]:
-        funding = ("seed " + str(r.get("funding_amount", ""))).strip() if r["source"].startswith("funding") else r["source"]
-        meta = " · ".join(x for x in (r["location"] or "location n/a", funding,
-                                      "grad-friendly" if r.get("grad_signal") else "") if x)
+        meta = " · ".join(str(x) for x in (r["location"] or "location n/a", r.get("salary"),
+                                           "startup" if r.get("startup_signal") else "",
+                                           "raised " + r["funding_amount"] if r.get("funding_amount") else "",
+                                           "via " + r["source"]) if x)
         blocks.append(("**%s** — %s\n%s\n<%s>" % (r["company"][:80], r["title"][:120], meta[:200], r["url"]))[:1900])
     if len(rows) > limit:
         blocks.append("…and %d more on the dashboard." % (len(rows) - limit))
@@ -758,8 +915,17 @@ def _write(path: str):
 def run(args) -> int:
     today = dt.date.today()
     state = load_state(args.state)
+    env = os.environ.get
+    rows: list[dict] = []
 
-    # 1-2. funding news -> watchlist
+    def add(label: str, got) -> None:
+        if got is None:
+            print("  ! %s unreachable" % label, file=sys.stderr)
+        else:
+            print("  %-28s %3d matching roles" % (label, len(got)))
+            rows.extend(got)
+
+    # --- company-first: funding news -> watchlist -> job boards
     if not args.no_news:
         print("Reading funding news...")
         for name, url, is_gn in FEEDS:
@@ -767,46 +933,50 @@ def run(args) -> int:
             if not body:
                 print("  ! feed unavailable: %s" % name, file=sys.stderr)
                 continue
-            anns = seed_announcements(parse_feed(body), name, is_gn, args.days, today)
-            print("  %-45.45s %2d seed announcements" % (name, len(anns)))
-            for a in anns:
+            for a in seed_announcements(parse_feed(body), name, is_gn, args.days, today):
                 state["companies"].setdefault(a["company"].lower(), a)   # keep earliest sighting
     cutoff = (today - dt.timedelta(days=args.watch_days)).isoformat()
     state["companies"] = {k: v for k, v in state["companies"].items() if v.get("announced", "") >= cutoff}
     watch = list(state["companies"].values())
-
-    # 3-4. probe job boards
-    rows: list[dict] = []
+    watch += [{"company": n, "amount": "", "announced": "", "headline": "", "link": ""} for n in EXTRA_COMPANIES]
+    print("Checking sources...")
     if watch:
-        print("Checking job boards for %d watchlisted companies..." % len(watch))
-        with ThreadPoolExecutor(max_workers=args.workers) as pool:
-            for comp, boards in zip(watch, pool.map(lambda c: find_boards(c["company"]), watch)):
-                for b in boards:
-                    rows += rows_from_board(comp, b, args.max_open_roles, args.any_level)
+        add("Startup boards (%d cos)" % len(watch), board_rows(watch, args.max_open_roles, args.any_level, args.workers))
+    if not args.no_yc:      # once a day: several hundred board lookups
+        def yc():
+            comps = yc_companies(today)
+            return None if comps is None else board_rows(comps, args.max_open_roles, args.any_level, args.workers)
+        add("YC UK/NL company boards", cached(state, "yc", 20, yc))
 
-    # 5. extra sources
+    # --- role-first
+    add("Arbeitnow", arbeitnow_rows(args.any_level))
+    if env("REED_API_KEY"):
+        add("Reed", reed_rows(env("REED_API_KEY"), args.any_level))
+    else:
+        print("  - Reed skipped (set REED_API_KEY)")
+    if env("ADZUNA_APP_ID") and env("ADZUNA_APP_KEY"):
+        add("Adzuna (daily)", cached(state, "adzuna", 20,
+                                     lambda: adzuna_rows(env("ADZUNA_APP_ID"), env("ADZUNA_APP_KEY"), args.any_level)))
+    else:
+        print("  - Adzuna skipped (set ADZUNA_APP_ID and ADZUNA_APP_KEY)")
     if not args.no_hn:
-        print("Reading Hacker News 'Who is hiring?'...")
-        rows += hn_rows(args.hn_threads, args.any_level)
-    if args.include_yc:      # off by default: company-level leads, not verified roles
-        print("Reading YC directory...")
-        rows += yc_rows(today)
+        add("Hacker News", hn_rows(args.hn_threads, args.any_level))
 
-    # filters
+    # --- filters
     if args.core_only:
         rows = [r for r in rows if r["match"] == "core"]
     if not args.any_location:
         rows = [r for r in rows if not r["location"] or r["loc_tier"] < len(LOCATION_TIERS)]
 
-    # dedupe + new/seen
-    uniq = {}
+    # --- dedupe across sources (first source wins), new/seen
+    uniq: dict[str, dict] = {}
     for r in rows:
-        uniq.setdefault(r["url"], r)
+        r = dict(r)                       # cached rows must not be mutated
+        r["key"] = row_key(r)
+        uniq.setdefault(r["key"], r)
     rows = list(uniq.values())
     for r in rows:
-        r.setdefault("grad_signal", "")
-        r.setdefault("min_years_exp", "")
-        first = state["seen"].setdefault(r["url"], today.isoformat())
+        first = state["seen"].setdefault(r["key"], today.isoformat())
         r["first_seen"] = first
         r["is_new"] = "yes" if first == today.isoformat() else ""
     rows.sort(key=sort_key)
@@ -820,26 +990,26 @@ def run(args) -> int:
             json.dump({"generated": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
                        "rows": [{k: r.get(k, "") for k in FIELDS} for r in rows]}, f, ensure_ascii=False)
 
-    # Discord: each role is announced once, ever (tracked in the state file)
+    # --- Discord: each role is announced once, ever (tracked in the state file)
     notified = set(state.get("notified", []))
-    to_send = [r for r in rows if r["url"] not in notified]
-    webhook = args.discord_webhook or os.environ.get("DISCORD_WEBHOOK_URL", "")
+    to_send = [r for r in rows if r["key"] not in notified]
+    webhook = args.discord_webhook or env("DISCORD_WEBHOOK_URL", "")
     if webhook and to_send:
         if notify_discord(webhook, to_send):
             print("Posted %d new roles to Discord" % len(to_send))
-            notified.update(r["url"] for r in to_send)
+            notified.update(r["key"] for r in to_send)
         else:
             print("  ! Discord post failed - will retry next run", file=sys.stderr)
     elif not webhook:
-        notified.update(r["url"] for r in to_send)
+        notified.update(r["key"] for r in to_send)
     state["notified"] = sorted(notified)
     with _write(args.state) as f:
         json.dump(state, f, indent=1, ensure_ascii=False)
 
     new = [r for r in rows if r["is_new"]]
-    print("\n%d matching roles/leads (%d new today) -> %s" % (len(rows), len(new), args.out))
+    print("\n%d matching roles (%d new today) -> %s" % (len(rows), len(new), args.out))
     for r in new[:25]:
-        print("  [%s] %s - %s (%s) %s" % (r["match"], r["company"], r["title"][:60],
+        print("  [%s] %s - %s (%s) %s" % (r["source"], r["company"], r["title"][:60],
                                          r["location"][:40] or "location n/a", r["url"]))
     if len(new) > 25:
         print("  ... and %d more in the CSV" % (len(new) - 25))
@@ -1000,20 +1170,70 @@ def selftest() -> int:
           "comment_text": "Kiln | Applied AI Engineer | Amsterdam | ONSITE | Visa<p>We just closed a $3M seed round "
                           "and are hiring our first ML engineers. New grads welcome."}
     r = hn_row(hn, "2026-11-01")
-    eq((r["company"], r["title"], r["match"], r["loc_tier"], r["url"]),
-       ("Kiln", "Applied AI Engineer", "core", 0, "https://news.ycombinator.com/item?id=42"), "hn row")
-    eq(hn_row({"comment_text": "BigCo | ML Engineer<p>seed in 2019, now Series C"}, ""), None, "hn later round")
-    eq(hn_row({"comment_text": "Shop | Sales rep<p>seed round"}, ""), None, "hn wrong role")
+    eq((r["company"], r["title"], r["match"], r["loc_tier"], r["startup_signal"], r["url"]),
+       ("Kiln", "Applied AI Engineer", "core", 0, "yes", "https://news.ycombinator.com/item?id=42"), "hn row")
+    eq(hn_row({"comment_text": "BigCo | Junior ML Engineer | London<p>Join us"}, "")["startup_signal"], "", "hn no funding ok")
+    eq(hn_row({"comment_text": "Shop | Sales rep<p>graduates welcome"}, ""), None, "hn wrong role")
     eq(hn_row({"comment_text": ""}, ""), None, "hn empty")
 
+    # aggregator rows
+    a = arbeitnow_row({"company_name": "Kiln", "title": "Graduate Machine Learning Engineer", "location": "Shoreditch",
+                       "url": "https://x/1", "created_at": 1767225600, "remote": False,
+                       "description": "<p>We are a seed-stage startup. Visa sponsorship available.</p>"}, True)
+    eq((a["location"], a["loc_tier"], a["posted"], a["startup_signal"], a["visa_or_relocation_mentioned"]),
+       ("Shoreditch, UK", 1, "2026-01-01", "yes", "yes"), "arbeitnow uk")
+    eq(arbeitnow_row({"company_name": "K", "title": "Junior ML Engineer", "location": "Berlin", "url": "u"}, False)["loc_tier"],
+       2, "arbeitnow non-uk site keeps real location")
+    eq(arbeitnow_row({"company_name": "K", "title": "ML Engineer", "location": "London", "url": "u", "description": ""}, True),
+       None, "arbeitnow no grad signal")
+    eq(arbeitnow_row({}, True), None, "arbeitnow empty")
+    rd = {"employerName": "Harbor Labs", "jobTitle": "AI Engineer", "locationName": "London", "jobUrl": "https://r/1",
+          "date": "03/11/2026", "jobDescription": "Join our team.", "minimumSalary": 38000.0, "maximumSalary": 45000.0}
+    r = reed_row(rd, True)
+    eq((r["posted"], r["salary"], r["location"], r["grad_signal"]), ("2026-11-03", "£38,000–£45,000", "London, UK", "yes"), "reed grad hint")
+    eq(reed_row(rd, False), None, "reed without hint needs signal")
+    eq(reed_row(dict(rd, jobTitle="Senior AI Engineer"), True), None, "reed senior")
+    eq(reed_row(dict(rd, jobDescription="5+ years of experience needed"), True), None, "reed years")
+    eq(reed_row(dict(rd, employerName="Apex Recruitment Ltd"), True), None, "reed agency")
+    eq(reed_row(dict(rd, jobTitle="Graduate Sales Executive"), True), None, "reed wrong role")
+    eq(reed_row(dict(rd, minimumSalary=None, maximumSalary=None), True)["salary"], "", "reed no salary")
+    az = {"title": "<strong>Junior</strong> Machine Learning Engineer", "company": {"display_name": "Tolq"},
+          "location": {"display_name": "Amsterdam, Noord-Holland"}, "redirect_url": "https://a/1?utm=1",
+          "created": "2026-11-10T08:00:00Z", "description": "…", "salary_min": 40000, "salary_max": 40000,
+          "salary_is_predicted": "0"}
+    r = adzuna_row(az, "nl")
+    eq((r["title"], r["loc_tier"], r["salary"], r["posted"]), ("Junior Machine Learning Engineer", 0, "€40,000", "2026-11-10"), "adzuna nl")
+    eq(adzuna_row(dict(az, salary_is_predicted="1"), "gb")["salary"], "", "adzuna predicted salary hidden")
+    eq(adzuna_row({"title": "Junior ML Engineer"}, "gb"), None, "adzuna no url")
+    eq(to_date("03/11/2026"), "2026-11-03", "date dd/mm/yyyy")
+
+    # identity + cache
+    eq(row_key({"company": "Kiln B.V.", "title": "Junior ML Engineer", "url": "u1"}),
+       row_key({"company": "kiln bv", "title": "Junior  ML  Engineer", "url": "u2"}), "row_key cross-source")
+    eq(row_key({"company": "", "title": "X", "url": "u1"}), "u1", "row_key fallback")
+    st = {"cache": {}}
+    calls = []
+    fn = lambda: calls.append(1) or [{"a": 1}]
+    eq(cached(st, "x", 20, fn, now=1000.0), [{"a": 1}], "cache miss")
+    eq(cached(st, "x", 20, fn, now=1000.0 + 3600), [{"a": 1}], "cache hit")
+    eq(len(calls), 1, "cache hit does not call")
+    eq(cached(st, "x", 20, lambda: None, now=1000.0 + 30 * 3600), [{"a": 1}], "cache stale reused on failure")
+    eq(cached({"cache": {}}, "y", 20, lambda: None, now=1.0), [], "cache failure with nothing stored")
+
+    # company-first
     yc = {"name": "Reflow", "slug": "reflow", "batch": "Summer 2026", "team_size": 4, "isHiring": True,
-          "one_liner": "AI agents for plumbers", "tags": ["B2B"], "industries": ["B2B"], "all_locations": "London"}
-    eq(yc_row(yc, 2025, 15)["url"], "https://www.ycombinator.com/companies/reflow/jobs", "yc ok")
-    eq(yc_row(dict(yc, batch="Winter 2019"), 2025, 15), None, "yc old batch")
-    eq(yc_row(dict(yc, team_size=200), 2025, 15), None, "yc big team")
-    eq(yc_row(dict(yc, one_liner="Payroll for dentists"), 2025, 15), None, "yc not ai")
+          "all_locations": "London, England, United Kingdom", "regions": ["United Kingdom"], "website": "https://r"}
+    eq(yc_company(yc, 2022)["company"], "Reflow", "yc ok")
+    eq(yc_company(dict(yc, all_locations="San Francisco, CA, USA", regions=["United States of America"]), 2022), None, "yc not uk/nl")
+    eq(yc_company(dict(yc, batch="Winter 2019"), 2022), None, "yc old batch")
+    eq(yc_company(dict(yc, team_size=900), 2022), None, "yc big team")
+    eq(yc_company({}, 2022), None, "yc empty")
     eq(yc_batch_year("W25"), 2025, "yc short batch")
     eq(yc_batch_year(""), None, "yc no batch")
+    sa = seed_announcements([{"title": "Kiln raises $20M Series A", "link": "l", "date": "", "summary": ""},
+                             {"title": "Voltic raises $90M Series C", "link": "l", "date": "", "summary": ""}],
+                            "t", False, 60, dt.date(2026, 11, 14))
+    eq([x["company"] for x in sa], ["Kiln"], "series A in, series C out")
 
     if eq_fail:
         print("SELFTEST FAILED:\n  " + "\n  ".join(eq_fail))
@@ -1029,8 +1249,8 @@ def main() -> int:
     p.add_argument("--days", type=int, default=60, help="ignore funding news older than this (default 60)")
     p.add_argument("--watch-days", type=int, default=180,
                    help="keep re-checking a company's job board this long after its round (default 180)")
-    p.add_argument("--max-open-roles", type=int, default=20,
-                   help="skip boards with more openings than this (default 20)")
+    p.add_argument("--max-open-roles", type=int, default=60,
+                   help="skip boards with more openings than this; guards against wrong-company matches (default 60)")
     p.add_argument("--core-only", action="store_true", help="only Applied AI / ML titles, no adjacent titles")
     p.add_argument("--any-location", action="store_true", help="don't restrict to the Netherlands / UK")
     p.add_argument("--any-level", action="store_true", help="keep senior / mid-level roles too")
@@ -1038,7 +1258,7 @@ def main() -> int:
     p.add_argument("--discord-webhook", default="", help="Discord webhook URL (or set DISCORD_WEBHOOK_URL)")
     p.add_argument("--no-news", action="store_true")
     p.add_argument("--no-hn", action="store_true")
-    p.add_argument("--include-yc", action="store_true", help="add YC company-level leads (off by default)")
+    p.add_argument("--no-yc", action="store_true")
     p.add_argument("--hn-threads", type=int, default=2, help="how many monthly HN threads to read (default 2)")
     p.add_argument("--workers", type=int, default=6)
     p.add_argument("--selftest", action="store_true")
