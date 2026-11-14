@@ -223,6 +223,30 @@
    "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPRGsxc0FZSVR6VEd6ZnZSMGp5UnpZeXFDazl0TnNTVXV3NGhFU2xMQXd6VVBrdVB4VlpSZjkxbjNfalZwZ2xBZjNEaDhZVThCQWF1UmZKTGxwc3NHLWxfOVUzSWFuUm5tdVNSNHgxSEx5bDFCSWg1cE5qVFEtS0swekhMaTAyaDE0empPSEtyMUdfVG1nRmhCUWc3NS1QY2txNGJJWjdKTGZzT2RNSGctSXhTRFpZWWJy?oc=5",
    "source": "Google News: \"seed\" AI startup Amsterdam OR Netherlands raises when:30d",
    "amount": "$100Million"
+  },
+  "se3": {
+   "company": "SE3",
+   "announced": "2026-11-12",
+   "headline": "Exclusive: SE3, a German startup building ‘spatial intelligence’ for military drones, gets $30 million in Series A funding",
+   "link": "https://news.google.com/rss/articles/CBMi4gFBVV95cUxPdmdrRTI4bHcwQzZST29FQjdhbDJSMTB4QUtOcC01Rk0zYTNscTJVMlhQbDcyV3NqMVlsN3BwTmZQZzlQRlZ2UUZPWFVPbTc1WVExZ2wySkltd1BDZU1XMFowZW5kYkdkam5Zem1EM29IS2xRQ2pvRkI2ZG53VWFZUWpRWTRuVERoQ0RWZjh1MTc0SUJBYnU2eWZDLUxGTTVoRGUzcTFOLVJyZEZaZk9MZFBMS0RTRG5pcnZaMUE0WGFqNEhRUndsdC1pQ3d6QjU5MlVhcWhMZGRHd002N3d6dTR3?oc=5",
+   "source": "Google News: \"Series A\" AI startup London OR UK raises when:14d",
+   "amount": "$30million"
+  },
+  "uforce": {
+   "company": "UFORCE",
+   "announced": "2026-11-12",
+   "headline": "Ukrainian Defence Tech UFORCE Raises €630M Series A at €5.4B Valuation",
+   "link": "https://news.google.com/rss/articles/CBMipwFBVV95cUxOZndsbEZhV0oxaHRuQzAwYW9zNFphRlExdXV0VFZ0dXdxUGdqMXRDc29BX2JNMThjNzlWbC1SSVN5WEtLQTRMQ1hIUlJyZlBzeU1NM3FncHc2QWFDbGZmTzM0aVYwaEF2Z2Ffak10V1VRMHI2ZVl4Wjc0eHRoVUpVUGJOdXpLdWFoZEs0dF9UTThRY3VaR3hfMm1sajZvU2xzWThvSnVOSQ?oc=5",
+   "source": "Google News: \"Series A\" AI startup London OR UK raises when:14d",
+   "amount": "€630M"
+  },
+  "ravical": {
+   "company": "Ravical",
+   "announced": "2026-10-29",
+   "headline": "Ravical Raises $17M Seed to Scale Accounting Expertise With AI",
+   "link": "https://news.google.com/rss/articles/CBMid0FVX3lxTE1FTlJnWC1SU2pYMmdQSnBxdzQ0cUNEYlZmSEpFaTFZWXVFZXRhOWNscnNTOFVhSElfUFFIdlFCMGsyY1IyV3BNOVlRMm41NkVHclBhejhaLU9rVDcxczRzZjdYMjdhZ1JaTW9KWk5fMFR5NFVRbWFj?oc=5",
+   "source": "Google News: \"seed\" OR \"Series A\" AI startup Amsterdam OR Netherlands raises when:30d",
+   "amount": "$17M"
   }
  },
  "seen": {
@@ -239,9 +263,27 @@
   "https://www.ycombinator.com/companies/servo7/jobs": "2026-11-14",
   "https://www.ycombinator.com/companies/juno-chat/jobs": "2026-11-14",
   "https://www.ycombinator.com/companies/revnu/jobs": "2026-11-14",
-  "https://www.ycombinator.com/companies/princeps/jobs": "2026-11-14"
+  "https://www.ycombinator.com/companies/princeps/jobs": "2026-11-14",
+  "wheely|associatedatascientistoperationsresearch": "2026-11-14",
+  "433|jraiengineer": "2026-11-14",
+  "marshallwolfe|datascientist": "2026-11-14",
+  "efinancialcareers|aiengineerplatformcrisil": "2026-11-14",
+  "efinancialcareers|aiengineerpythonavpciti": "2026-11-14",
+  "efinancialcareers|productionaiengineervicepresidentciti": "2026-11-14",
+  "efinancialcareers|juniorsoftwareengineergenerativeaiplatformsciti": "2026-11-14",
+  "efinancialcareers|forwarddeployedengineeravpciti": "2026-11-14",
+  "efinancialcareers|machinelearningresearchengineerhongkonglondonglobaltrading": "2026-11-14",
+  "itolrecruit|traineeaiengineer": "2026-11-14",
+  "itolrecruit|junioraideveloper": "2026-11-14"
  },
  "notified": [
+  "433|jraiengineer",
+  "efinancialcareers|aiengineerplatformcrisil",
+  "efinancialcareers|aiengineerpythonavpciti",
+  "efinancialcareers|forwarddeployedengineeravpciti",
+  "efinancialcareers|juniorsoftwareengineergenerativeaiplatformsciti",
+  "efinancialcareers|machinelearningresearchengineerhongkonglondonglobaltrading",
+  "efinancialcareers|productionaiengineervicepresidentciti",
   "https://news.ycombinator.com/item?id=49962303",
   "https://www.ycombinator.com/companies/autumn/jobs",
   "https://www.ycombinator.com/companies/brickwise/jobs",
@@ -255,6 +297,16 @@
   "https://www.ycombinator.com/companies/revnu/jobs",
   "https://www.ycombinator.com/companies/seeing-systems/jobs",
   "https://www.ycombinator.com/companies/servo7/jobs",
-  "https://www.ycombinator.com/companies/zalos/jobs"
- ]
+  "https://www.ycombinator.com/companies/zalos/jobs",
+  "itolrecruit|junioraideveloper",
+  "itolrecruit|traineeaiengineer",
+  "marshallwolfe|datascientist",
+  "wheely|associatedatascientistoperationsresearch"
+ ],
+ "cache": {
+  "yc": {
+   "at": 1794691966.788002,
+   "rows": []
+  }
+ }
 }
