@@ -247,6 +247,14 @@
    "link": "https://news.google.com/rss/articles/CBMid0FVX3lxTE1FTlJnWC1SU2pYMmdQSnBxdzQ0cUNEYlZmSEpFaTFZWXVFZXRhOWNscnNTOFVhSElfUFFIdlFCMGsyY1IyV3BNOVlRMm41NkVHclBhejhaLU9rVDcxczRzZjdYMjdhZ1JaTW9KWk5fMFR5NFVRbWFj?oc=5",
    "source": "Google News: \"seed\" OR \"Series A\" AI startup Amsterdam OR Netherlands raises when:30d",
    "amount": "$17M"
+  },
+  "machenta": {
+   "company": "Machenta",
+   "announced": "2026-11-02",
+   "headline": "Machenta Raises $40 Million Seed Round To Build Instant-Learning Robot Foundation Models",
+   "link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxNdFMwa2l6RkZpci1WQnlIOHo0bHp0WGh5Q1hnYzFFZHAzRng1aHE0YVdXeWJHVll5WkJnenVaVEpzWU5taWtiX042M25NRlhWOV94MHZzbXNkMTQ5MjdQNW9zSHhuMEphbFhPaG56OWVqVFo1NTZFQm5IWGRxVGxiNEVpWWxWc2F6Y0NnQ2Q2aTdLU09pTUVKRVFVeTh6aGdKdW9POXMxSnFJTTA?oc=5",
+   "source": "Google News: \"seed round\" AI startup London OR UK raises when:14d",
+   "amount": "$40Million"
   }
  },
  "seen": {
@@ -307,7 +315,7 @@
  ],
  "cache": {
   "yc": {
-   "at": 1794691966.788002,
+   "at": 1794768708.3139553,
    "rows": []
   }
  }
