@@ -271,6 +271,14 @@
    "link": "https://news.google.com/rss/articles/CBMifkFVX3lxTE0wNVRoYU5RUHRCY2h2WS1TUVJ4UTRyMDVHTlRZNHRLMC1Wa2pHNEtTcWpoWHlqOHo1Wl95RnN0OHhScUoxaFpxb1R5UDhZTWhRc1BCeDhFNlljQ2ZEYUo0ZTdmUTh2RDY0d0gwTXpKT0kxTFBiM3p6MWp4TlRaQQ?oc=5",
    "source": "Google News: \"seed round\" AI startup London OR UK raises when:14d",
    "amount": "€7.5M"
+  },
+  "bay": {
+   "company": "Bay",
+   "announced": "2026-11-10",
+   "headline": "Bay Raises $37M Series A to Scale Enterprise AI Agent Security",
+   "link": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxPRkpZc2VvOWRFZUs5b2NNRHRURW8ydzBQbngxYVc3OXVDZ25wQWxMTDJXNjNZM2hFUUZGNlZIYzdRajloYzZ1TGotajg2X0c1T1RLX3pQcmwxTWhqNnNnU2plTEtuMU9PaHJJMjg2ckFSRHBXV0V3MGE4V3VzU3p6NlRralNMN3BHM2Nn?oc=5",
+   "source": "Google News: \"seed\" OR \"Series A\" AI startup Amsterdam OR Netherlands raises when:30d",
+   "amount": "$37M"
   }
  },
  "seen": {
@@ -299,7 +307,9 @@
   "efinancialcareers|machinelearningresearchengineerhongkonglondonglobaltrading": "2026-11-14",
   "itolrecruit|traineeaiengineer": "2026-11-14",
   "itolrecruit|junioraideveloper": "2026-11-14",
-  "aecom|appliedaiengineer": "2026-11-15"
+  "aecom|appliedaiengineer": "2026-11-15",
+  "efinancialcareers|phdmachinelearningquantresearcherselbyjennings": "2026-11-16",
+  "efinancialcareers|machinelearningquantresearcher": "2026-11-16"
  },
  "notified": [
   "433|jraiengineer",
@@ -308,7 +318,9 @@
   "efinancialcareers|aiengineerpythonavpciti",
   "efinancialcareers|forwarddeployedengineeravpciti",
   "efinancialcareers|juniorsoftwareengineergenerativeaiplatformsciti",
+  "efinancialcareers|machinelearningquantresearcher",
   "efinancialcareers|machinelearningresearchengineerhongkonglondonglobaltrading",
+  "efinancialcareers|phdmachinelearningquantresearcherselbyjennings",
   "efinancialcareers|productionaiengineervicepresidentciti",
   "https://news.ycombinator.com/item?id=49962303",
   "https://www.ycombinator.com/companies/autumn/jobs",
@@ -331,7 +343,7 @@
  ],
  "cache": {
   "yc": {
-   "at": 1794768708.3139553,
+   "at": 1794866447.879772,
    "rows": []
   }
  }
