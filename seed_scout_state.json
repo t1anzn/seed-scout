@@ -295,6 +295,46 @@
    "link": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxPSW9WMGtyTEtZQVR4V3pMamF4MGFtZG56SnV5RWFFNDBYUFZSVk0xM2RpTFlCQ3lNTEdsT3hWVmc1UHlxalpTQ1lmUlV5bzVVa29VNG1Kd2VaQkc3MG5mZ3J5a09jTkFxcDRYTVBMVzBxaXBqdlpCTmhCS2dhUlU5R3FtQjVlUno2cUVxbE1DYUVRWGdOSVRMVUh4eUdibk1yeThwZ21RcDdFVHh4cDMzTFlmNlpOVUdwak9BS1hxUU1EOUZXUU9zQjN0b0Rka3hSS052LVdkWUZfZzRZM2c?oc=5",
    "source": "Google News: \"seed\" OR \"Series A\" AI startup Amsterdam OR Netherlands raises when:30d",
    "amount": "€3.8million"
+  },
+  "tiberius": {
+   "company": "Tiberius",
+   "announced": "2026-11-17",
+   "headline": "Defence unicorn Tiberius raises $85M to scale its long-range ramjet artillery shell",
+   "link": "https://techfundingnews.com/defence-unicorn-tiberius-raises-85m-to-scale-its-long-range-ramjet-artillery-shell/",
+   "source": "Tech Funding News",
+   "amount": "$85M"
+  },
+  "asynchronics": {
+   "company": "Asynchronics",
+   "announced": "2026-11-17",
+   "headline": "Polish Asynchronics lands $3.1M seed led by b2venture for spacecraft digital twins",
+   "link": "https://techfundingnews.com/asynchronics-raises-3-1m-spacecraft-digital-twins/",
+   "source": "Tech Funding News",
+   "amount": "$3.1M"
+  },
+  "alethio therapeutics": {
+   "company": "Alethio Therapeutics",
+   "announced": "2026-11-06",
+   "headline": "Oxford spin-out Alethio Therapeutics raises €80.46 million Series A to advance targeted blood cancer therapies - EU-Startups",
+   "link": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxPN3FhSGppZ3c0aEhGazBFbmZ6eGJpTlJubGYtQ1FlcWRkTEZCRXNST1RibURraU1nWE1hek05VUtNejBRYU01MlI1ZVNUZTFxUWc1WFFYNDdUVE5VNWpLalZoMG4tdHd3RkJGNlFyTWkydjBWcXVBTUhZenZidTRFSE1OSDg3RlNXd3AzdnAwUlZINDdTdDFFMUItMFZkaC1vd0lnT2E4dm9XRERid0xYSVhObWI1Y2ZOc0FjbjZEb2U4WVVZLW1hSU5vdVBXMzJjeUx3Z1pXVjRTMERWSlQ4dQ?oc=5",
+   "source": "Google News: \"Series A\" AI startup London OR UK raises when:14d",
+   "amount": "€80.46million"
+  },
+  "jooba": {
+   "company": "Jooba",
+   "announced": "2026-10-20",
+   "headline": "Pitch deck: AI recruiting startup Jooba raises $4M seed from a16z speedrun, Scribble Ventures, and Genius Ventures",
+   "link": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxOTktWTTNLczJUclVKSzlHYklSdWpkcDY3U2xwckdRT3E5YTJXZV9fU2o3SDd5RGk4SWFwb1ZKS3FZM1hPbG41MGN5OWFEeDhvWk5XSWJOLVM4N1F0dWwycVRuVi1sRUx4N3pIZS1lcE9HdmthS2s2MzNnWGIyY1ZIOXJ3T3lFS2FqNVh5TjlKVkt2VGVhVDR0cEJ4RXhwcmZKdnUwVWVNQzVCR3paNEVyVk5ZZ1lkMEE4eVFESHNMZkc3LUFjX0M4QzV1U0NQMkxWOU0wOUJR?oc=5",
+   "source": "Google News: \"seed\" OR \"Series A\" AI startup Amsterdam OR Netherlands raises when:30d",
+   "amount": "$4M"
+  },
+  "iconic": {
+   "company": "Iconic",
+   "announced": "2026-11-17",
+   "headline": "Iconic raises $10M seed to make sense of billion-dollar projects",
+   "link": "https://news.google.com/rss/articles/CBMingFBVV95cUxNZ0FzdFJGTGQ2c1lrSDF6dldQOXBYUU1tNXpMdGVzMFByM1dmXzdVandFVWpHMnlKdGJIV181NEtjVWdPVERVWUh2cWJlYlJvMnhoT2lEY19STHVraE5FalhiYkF0ZEJlQVNLaEF6U2lCblNUZWxoQnpGUUdrRi0ycTVMTnZNQnZXalE3MVdyWW11S0thenl1NGRPY2dkdw?oc=5",
+   "source": "Google News: \"seed\" OR \"Series A\" AI startup Amsterdam OR Netherlands raises when:30d",
+   "amount": "$10M"
   }
  },
  "seen": {
@@ -359,7 +399,7 @@
  ],
  "cache": {
   "yc": {
-   "at": 1794866447.879772,
+   "at": 1794940435.8826635,
    "rows": []
   }
  }
