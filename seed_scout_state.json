@@ -375,6 +375,22 @@
    "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE1TOFBTUERYODE4bWVVanNsdjI2S2lHSlR3cWtOMFpuU2VVbWtHSGR6OXUxRTVFWFdpLWRkbjZ0MFlPT2VKd2ROX2NYYnpoVWlncHZN?oc=5",
    "source": "Google News: \"seed\" OR \"Series A\" AI startup Amsterdam OR Netherlands raises when:30d",
    "amount": "$300M"
+  },
+  "genesis ai": {
+   "company": "Genesis AI",
+   "announced": "2026-11-18",
+   "headline": "Nvidia-backed Genesis AI raises $500M Series A at $3.5B valuation to build general-purpose robots",
+   "link": "https://techfundingnews.com/nvidia-backed-genesis-ai-raises-500m-series-a-at-3-5b-valuation-to-build-general-purpose-robots/",
+   "source": "Tech Funding News",
+   "amount": "$500M"
+  },
+  "perry ai": {
+   "company": "Perry AI",
+   "announced": "2026-11-18",
+   "headline": "Perry AI secures £1.74 million Seed funding led by Haatch alongside Antler, Araya Ventures and Syncorp Ventures",
+   "link": "https://news.google.com/rss/articles/CBMi4wFBVV95cUxQb2t4OEtrQ3VFdlowVU1KZTVrT2JrVHBUcXRtSVhuSG9FYXpiQmZzMkFBTUV1QjdGajRDRFBLWHBEdGY4SXJsVVVuWXVTRXBuV243RkJuR25VZlJhUFJxaDlYa1BaR1l0d1hhS0hiN1d1MGFOSGhYdEwxUnU1V2x6R2ptdUhZTXROMnFFc24wSmk2RUo5cEZnRmRjVFY0OW5qeXprRUd4VVdwTUpURzVzWE9BRF81YUxzSnZ2b2NKX0xnRzZrWU03NTMwMFl3T29RazJNSldYeDhJNWt2T0ZYSWhiUQ?oc=5",
+   "source": "Google News: \"seed round\" AI startup London OR UK raises when:14d",
+   "amount": "£1.74million"
   }
  },
  "seen": {
@@ -406,7 +422,8 @@
   "aecom|appliedaiengineer": "2026-11-15",
   "efinancialcareers|phdmachinelearningquantresearcherselbyjennings": "2026-11-16",
   "efinancialcareers|machinelearningquantresearcher": "2026-11-16",
-  "efinancialcareers|appliedaiengineerequitiesdesksselbyjennings": "2026-11-18"
+  "efinancialcareers|appliedaiengineerequitiesdesksselbyjennings": "2026-11-18",
+  "thgingenuity|graduatejuniordatascientist": "2026-11-18"
  },
  "notified": [
   "433|jraiengineer",
@@ -437,6 +454,7 @@
   "itolrecruit|junioraideveloper",
   "itolrecruit|traineeaiengineer",
   "marshallwolfe|datascientist",
+  "thgingenuity|graduatejuniordatascientist",
   "wheely|associatedatascientistoperationsresearch"
  ],
  "cache": {
