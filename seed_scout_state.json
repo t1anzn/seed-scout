@@ -391,6 +391,62 @@
    "link": "https://news.google.com/rss/articles/CBMi4wFBVV95cUxQb2t4OEtrQ3VFdlowVU1KZTVrT2JrVHBUcXRtSVhuSG9FYXpiQmZzMkFBTUV1QjdGajRDRFBLWHBEdGY4SXJsVVVuWXVTRXBuV243RkJuR25VZlJhUFJxaDlYa1BaR1l0d1hhS0hiN1d1MGFOSGhYdEwxUnU1V2x6R2ptdUhZTXROMnFFc24wSmk2RUo5cEZnRmRjVFY0OW5qeXprRUd4VVdwTUpURzVzWE9BRF81YUxzSnZ2b2NKX0xnRzZrWU03NTMwMFl3T29RazJNSldYeDhJNWt2T0ZYSWhiUQ?oc=5",
    "source": "Google News: \"seed round\" AI startup London OR UK raises when:14d",
    "amount": "£1.74million"
+  },
+  "mountain": {
+   "company": "MountAIn",
+   "announced": "2026-11-18",
+   "headline": "French frugal AI infrastructure startup MountAIn raises €7.3 million to bring advanced AI to sub-€9 chips",
+   "link": "https://www.eu-startups.com/2026/11/french-frugal-ai-infrastructure-startup-mountain-raises-e7-3-million-to-bring-advanced-ai-to-sub-e9-chips/",
+   "source": "EU-Startups",
+   "amount": "€7.3million"
+  },
+  "dcubed": {
+   "company": "Dcubed",
+   "announced": "2026-11-18",
+   "headline": "Dcubed raises €27.2M Series A+ to scale space deployment and power systems",
+   "link": "https://tech.eu/2026/11/18/dcubed-raises-eur272m-series-a-to-scale-space-deployment-and-power-systems/",
+   "source": "Tech.eu",
+   "amount": "€27.2M"
+  },
+  "qluster": {
+   "company": "Qluster",
+   "announced": "2026-11-17",
+   "headline": "Qluster raises €4.7M to power the next generation of quantum computing",
+   "link": "https://tech.eu/2026/11/17/qluster-raises-eur47m-to-power-the-next-generation-of-quantum-computing/",
+   "source": "Tech.eu",
+   "amount": "€4.7M"
+  },
+  "nomadic": {
+   "company": "Nomadic",
+   "announced": "2026-11-17",
+   "headline": "Nomadic bags $6M to deploy self-charging drones that spot weak points in power grids",
+   "link": "https://tech.eu/2026/11/17/nomadic-bags-6m-to-deploy-self-charging-drones-that-spot-weak-points-in-power-grids/",
+   "source": "Tech.eu",
+   "amount": "$6M"
+  },
+  "tesorai": {
+   "company": "Tesorai",
+   "announced": "2026-11-18",
+   "headline": "Tesorai raises $5.3M seed, backed by Perplexity Fund and IQT, to make raw lab data searchable",
+   "link": "https://techfundingnews.com/tesorai-raises-5-3m-seed-backed-by-perplexity-fund-and-iqt-to-make-raw-lab-data-searchable/",
+   "source": "Tech Funding News",
+   "amount": "$5.3M"
+  },
+  "morgan": {
+   "company": "Morgan",
+   "announced": "2026-11-16",
+   "headline": "Morgan raises AUD $3.65 million seed round led by Blackbird",
+   "link": "https://news.google.com/rss/articles/CBMikAFBVV95cUxOUFo0bzluRFBtMjBPUHBqQk03S1hON3BZT2lIQnhxa3U2UGMwQ05xVXBaTXBLTXdRU0tIRjdSczZLTlc2VlBseXVRY2FneWRiVHFkd2RvUGxHZTdSck1DZ1ZWdTNyMnctYjA5X0RtQ0ptZU9KT29kVkxtNXdvRjVfekxIZlNaVXZWbksybWVnQlE?oc=5",
+   "source": "Google News: \"seed round\" AI startup London OR UK raises when:14d",
+   "amount": "$3.65million"
+  },
+  "humyn labs": {
+   "company": "Humyn Labs",
+   "announced": "2026-11-18",
+   "headline": "AI startup Humyn Labs raises $47 million in Series A funding round",
+   "link": "https://news.google.com/rss/articles/CBMizwFBVV95cUxPNXZSOGpKLWxTdFIzakN4c0JQS3BJdkM5MVNfRDA0QUZjVUdxMWZOSUdWbHROQ0ZYQmh6VjNSSm1xQmFXZnZGMVlyMHBSeTFtem1OTUhoMEtfZWZfRkZMdXduT2ZSQVNETV9rZGptWmJEckg4cU4yTVNES3hKU2NNY3gwaDR1Q0tESFRlSTZ3bTVUN1B5TTQtcFlhUHRrR2V5X2tlYkxJTTV4d2JvWjRMTnRnbHhMWkVHNWJPSFJTUWo0dlJpWGFEYjQxdTNodVnSAdQBQVVfeXFMUDBNU251cTZyY1huU29YVFhrd3lqUHNPNlBVRXNLR0I5T3d6aWpaazBPX1Q2NGcybjZ2ZTZoZG9lYjl3VnBLOHlRQkdHQzBmNWhyZmY2YTJPd1NiVk9zTjFYVXk4SXBodWotVlpQbTJlbUt6czliUzhDRlVqX1lNa29pZjl6SGx3dVFseFR3UUhXOXg2QllDMjdJM0xVZVM0OGpCVEFOQkFhbldrMmltRWdScXhWY0t6dTdCa3gxTWdFNVc0SmhGZG01cjB4SG9JQl9HRl8?oc=5",
+   "source": "Google News: \"Series A\" AI startup London OR UK raises when:14d",
+   "amount": "$47million"
   }
  },
  "seen": {
@@ -423,11 +479,13 @@
   "efinancialcareers|phdmachinelearningquantresearcherselbyjennings": "2026-11-16",
   "efinancialcareers|machinelearningquantresearcher": "2026-11-16",
   "efinancialcareers|appliedaiengineerequitiesdesksselbyjennings": "2026-11-18",
-  "thgingenuity|graduatejuniordatascientist": "2026-11-18"
+  "thgingenuity|graduatejuniordatascientist": "2026-11-18",
+  "efinancialcareers|agenticaiengineerassistantvicepresidentciti": "2026-11-18"
  },
  "notified": [
   "433|jraiengineer",
   "aecom|appliedaiengineer",
+  "efinancialcareers|agenticaiengineerassistantvicepresidentciti",
   "efinancialcareers|aiengineerplatformcrisil",
   "efinancialcareers|aiengineerpythonavpciti",
   "efinancialcareers|appliedaiengineerequitiesdesksselbyjennings",
@@ -459,7 +517,7 @@
  ],
  "cache": {
   "yc": {
-   "at": 1794940435.8826635,
+   "at": 1795033929.5336773,
    "rows": []
   }
  }
