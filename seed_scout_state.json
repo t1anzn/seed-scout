@@ -335,6 +335,46 @@
    "link": "https://news.google.com/rss/articles/CBMingFBVV95cUxNZ0FzdFJGTGQ2c1lrSDF6dldQOXBYUU1tNXpMdGVzMFByM1dmXzdVandFVWpHMnlKdGJIV181NEtjVWdPVERVWUh2cWJlYlJvMnhoT2lEY19STHVraE5FalhiYkF0ZEJlQVNLaEF6U2lCblNUZWxoQnpGUUdrRi0ycTVMTnZNQnZXalE3MVdyWW11S0thenl1NGRPY2dkdw?oc=5",
    "source": "Google News: \"seed\" OR \"Series A\" AI startup Amsterdam OR Netherlands raises when:30d",
    "amount": "$10M"
+  },
+  "commit biologics": {
+   "company": "Commit Biologics",
+   "announced": "2026-11-17",
+   "headline": "Denmark’s Commit Biologics secures €54 million Seed funding to advance cancer and autoimmune therapies",
+   "link": "https://www.eu-startups.com/2026/11/denmarks-commit-biologics-secures-e54-million-seed-funding-to-advance-cancer-and-autoimmune-therapies/",
+   "source": "EU-Startups",
+   "amount": "€54million"
+  },
+  "treat": {
+   "company": "Treat",
+   "announced": "2026-11-17",
+   "headline": "Swappie co-founder’s AI HealthTech startup Treat raises €3 million to streamline private healthcare",
+   "link": "https://www.eu-startups.com/2026/11/swappie-co-founders-ai-healthtech-startup-treat-raises-e3-million-to-streamline-private-healthcare/",
+   "source": "EU-Startups",
+   "amount": "€3million"
+  },
+  "alecto": {
+   "company": "Alecto",
+   "announced": "2026-11-16",
+   "headline": "Alecto lands €18 million to scale its AI-powered law firm beyond property transactions",
+   "link": "https://www.eu-startups.com/2026/11/alecto-lands-e18-million-to-scale-its-ai-powered-law-firm-beyond-property-transactions/",
+   "source": "EU-Startups",
+   "amount": "€18million"
+  },
+  "kardi ai": {
+   "company": "Kardi Ai",
+   "announced": "2026-11-11",
+   "headline": "Kardi Ai Raises CZK 130M Series A at CZK 600M to Expand AI ECG Monitoring",
+   "link": "https://news.google.com/rss/articles/CBMimwFBVV95cUxNV3hCRW9BcHlZZWp6YS04MlZrZzRfY2pUa1lHdFZJVlpTLUUta1Y2T2RoSi1KdVdkeXk5UUM3d2Qta3M2RzR3bE9GY2JCbUt1QVF3ZDE4NWNVRVk1NU1Dcl8wQzlUNU9BaFJpX2ljOFJVcWxIRXpDZDB0N0RFQTkxNXFMS3c1cDZobFJWNXhVSmJVZlNTQ1lZRkVHOA?oc=5",
+   "source": "Google News: \"seed\" OR \"Series A\" AI startup Amsterdam OR Netherlands raises when:30d",
+   "amount": ""
+  },
+  "onodrim": {
+   "company": "Onodrim",
+   "announced": "2026-11-10",
+   "headline": "European Defence Acquisition Platform Onodrim Raises $300M Series A at $1.3B Valuation",
+   "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE1TOFBTUERYODE4bWVVanNsdjI2S2lHSlR3cWtOMFpuU2VVbWtHSGR6OXUxRTVFWFdpLWRkbjZ0MFlPT2VKd2ROX2NYYnpoVWlncHZN?oc=5",
+   "source": "Google News: \"seed\" OR \"Series A\" AI startup Amsterdam OR Netherlands raises when:30d",
+   "amount": "$300M"
   }
  },
  "seen": {
@@ -365,13 +405,15 @@
   "itolrecruit|junioraideveloper": "2026-11-14",
   "aecom|appliedaiengineer": "2026-11-15",
   "efinancialcareers|phdmachinelearningquantresearcherselbyjennings": "2026-11-16",
-  "efinancialcareers|machinelearningquantresearcher": "2026-11-16"
+  "efinancialcareers|machinelearningquantresearcher": "2026-11-16",
+  "efinancialcareers|appliedaiengineerequitiesdesksselbyjennings": "2026-11-18"
  },
  "notified": [
   "433|jraiengineer",
   "aecom|appliedaiengineer",
   "efinancialcareers|aiengineerplatformcrisil",
   "efinancialcareers|aiengineerpythonavpciti",
+  "efinancialcareers|appliedaiengineerequitiesdesksselbyjennings",
   "efinancialcareers|forwarddeployedengineeravpciti",
   "efinancialcareers|juniorsoftwareengineergenerativeaiplatformsciti",
   "efinancialcareers|machinelearningquantresearcher",
