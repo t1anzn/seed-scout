@@ -463,6 +463,22 @@
    "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTFBvc2lVbjcyc3IwaWV1TWN1LXRYTDhWdzhyMU82QUpDNmtveGVQQ3RseGhWTVNERmJ3aXNuLUFFSXV1cEFFak5yWjlya1FZS1M2b2RUeVI3NC1ObWVxbUhaUUt0RzU2OE5LdjhYZF9icDM3czJ5RXc?oc=5",
    "source": "Google News: \"seed round\" AI startup London OR UK raises when:14d",
    "amount": "$110M"
+  },
+  "wilgot": {
+   "company": "Wilgot",
+   "announced": "2026-11-19",
+   "headline": "Wilgot raises $3M in seed funding to help brands get recommended by AI",
+   "link": "https://tech.eu/2026/11/19/wilgot-raises-3m-in-seed-funding-to-help-brands-get-recommended-by-ai/",
+   "source": "Tech.eu",
+   "amount": "$3M"
+  },
+  "intelliprove": {
+   "company": "IntelliProve",
+   "announced": "2026-11-19",
+   "headline": "IntelliProve raises €2.7M to bring health monitoring from smartphones to humanoid robots",
+   "link": "https://tech.eu/2026/11/19/intelliprove-raises-eur27m-to-bring-health-monitoring-from-smartphones-to-humanoid-robots/",
+   "source": "Tech.eu",
+   "amount": "€2.7M"
   }
  },
  "seen": {
@@ -497,7 +513,8 @@
   "efinancialcareers|appliedaiengineerequitiesdesksselbyjennings": "2026-11-18",
   "thgingenuity|graduatejuniordatascientist": "2026-11-18",
   "efinancialcareers|agenticaiengineerassistantvicepresidentciti": "2026-11-18",
-  "wehrtyou|researchengineer": "2026-11-19"
+  "wehrtyou|researchengineer": "2026-11-19",
+  "efinancialcareers|machinelearningresearcherawardwinningglobalmarketmaker": "2026-11-19"
  },
  "notified": [
   "433|jraiengineer",
@@ -510,6 +527,7 @@
   "efinancialcareers|juniorsoftwareengineergenerativeaiplatformsciti",
   "efinancialcareers|machinelearningquantresearcher",
   "efinancialcareers|machinelearningresearchengineerhongkonglondonglobaltrading",
+  "efinancialcareers|machinelearningresearcherawardwinningglobalmarketmaker",
   "efinancialcareers|phdmachinelearningquantresearcherselbyjennings",
   "efinancialcareers|productionaiengineervicepresidentciti",
   "https://news.ycombinator.com/item?id=49962303",
@@ -535,7 +553,7 @@
  ],
  "cache": {
   "yc": {
-   "at": 1795033929.5336773,
+   "at": 1795120576.5256085,
    "rows": []
   }
  }
