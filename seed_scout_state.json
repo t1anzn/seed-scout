@@ -479,6 +479,70 @@
    "link": "https://tech.eu/2026/11/19/intelliprove-raises-eur27m-to-bring-health-monitoring-from-smartphones-to-humanoid-robots/",
    "source": "Tech.eu",
    "amount": "€2.7M"
+  },
+  "unsiloed ai": {
+   "company": "Unsiloed AI",
+   "announced": "2026-11-18",
+   "headline": "Unsiloed AI Raises $7.5M Seed to Grow Research, Engineering and Sales",
+   "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxNVlNZdXNMNmxUYm91Z09EQzRMSjlqemd0di1haV9HZkZ2TzJ6VFE4MUFxdlJ0TUZRTGQwZ09WYm9ncFh2V1dGMktVdndJRE9rM0pZZGlwQ0VoUWxYSi1udmVHRkRPT3U0aWRTOXJLQUxDdGpHa1U5eFlqOFJNOG1Ec3FXYmhtck5iTWNOTDI4S2tvN2c?oc=5",
+   "source": "Google News: \"seed\" OR \"Series A\" AI startup Amsterdam OR Netherlands raises when:30d",
+   "amount": "$7.5M"
+  },
+  "quointelligence": {
+   "company": "QuoIntelligence",
+   "announced": "2026-10-26",
+   "headline": "Frankfurt's QuoIntelligence lands backing from ex-German finance minister Christian Lindner months after €7.3 million Series A - EU-Startups",
+   "link": "https://news.google.com/rss/articles/CBMi9wFBVV95cUxNSlZZVVUyazY0R2FoRkpXMUlzT0pOdllfRmdIUjhKTnlYYmFpQXA0V1dMazA4VzBtM3VhTU5PU3RVSjh0YlpOOXF3Rko5Wlo3bDQtUTJoYXQ5NnFuOU1RVm5xWWF4OU5XQmdnYmM1ZzJfQ2hqdk43TjMxTE52QnpJemYyR2IydllId1FTYWUxS3dMb0Z5bDNUdG04LTdPWWpfWlMyVTRpVzh6NlhBWnF0ZDA1WVhJbmExNy02ZDNFTDV0dmNvclRjNnNldVhXcE0wWVVWaHhaM0dhWFJBUTlfbnVVQWVaSy11dk1oX0JjZ2ZpVzJ0Q1pj?oc=5",
+   "source": "Google News: \"seed\" OR \"Series A\" AI startup Amsterdam OR Netherlands raises when:30d",
+   "amount": "€7.3million"
+  },
+  "vero security": {
+   "company": "Vero Security",
+   "announced": "2026-11-18",
+   "headline": "Vero Security Raises $11M Seed to Expand AI Security Platform",
+   "link": "https://news.google.com/rss/articles/CBMiigFBVV95cUxOMzZaUWgyOHhwNlNTNXU0OTlNQWpGNG52bFF1d3c0bEZUNmhNRlV3UGpSQXhtb0IzaDlERTYwU1dvS295UzM4WlQwdEtoTVdRWWxRY3lZZTZUTjJ3Snl3VDc3ZXJkZjJQQk5QVUtyUVdwM0dyRmxWLUdyZ21TRUIxTzRGQkNYdksxMlE?oc=5",
+   "source": "Google News: \"seed\" OR \"Series A\" AI startup Amsterdam OR Netherlands raises when:30d",
+   "amount": "$11M"
+  },
+  "bob": {
+   "company": "BOB",
+   "announced": "2026-10-27",
+   "headline": "BOB raises USD 5.5 mln seed round for AI finance assistant",
+   "link": "https://news.google.com/rss/articles/CBMingFBVV95cUxQTHV0TGFBZ1ZZMTU2Yy1hUGRFRXJlem1XR2VScFJzamJ1LVRUMGlZd1NsU0xoay1EZGpJU1NVbkZfMlJiR3Z2MXhKazU1QzM4Q19qNlRnVjBQeFdJeE9HZ0I1cGhrdFBWQlBKZ0FiU2tRM2pldTVVX0Q3YVBScDBNYWNORXZCRldXWXRBZW5QS1RGUGM1d0JoNWx3dFFldw?oc=5",
+   "source": "Google News: \"seed\" OR \"Series A\" AI startup Amsterdam OR Netherlands raises when:30d",
+   "amount": ""
+  },
+  "daisytuner": {
+   "company": "Daisytuner",
+   "announced": "2026-11-16",
+   "headline": "Daisytuner Raises €6M Seed to Expand Daisyflow and Compiler Technology",
+   "link": "https://news.google.com/rss/articles/CBMilgFBVV95cUxNZE1fQjlPaVpaRDNqdGg4YzRNV0xFOE13Rkw5anh6Vm9KSnNLUUlGeUFDQmdSQjBzNm43c0JXWHVzMl81TmtGUGxWWHNtNndVQUNSUGVIWHZCclc4Z21mZHFIaFBCRFJFbUQxNVhFenFUM2doRHViLVpJVllUTjRTQ3ZWZzdaRHY0UnRTV01tcVV0cl9vaFE?oc=5",
+   "source": "Google News: \"seed\" OR \"Series A\" AI startup Amsterdam OR Netherlands raises when:30d",
+   "amount": "€6M"
+  },
+  "voyage labs": {
+   "company": "Voyage Labs",
+   "announced": "2026-11-17",
+   "headline": "Voyage Labs raises seed funding for AI travel assistant expansion",
+   "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxNS0Jqdnh1dFZYYjQxSDVDX0FmenhfMDA1X3pUNnJNTXNBZGMxWmFwZXVpcTlmZVBVYkNsY0tfa2V2NmVNQWJTQUlZTS10dHBVc3FFUExMeDgzMENVWktHMEVxX2VTdFYzdTVoZzExeF9OZDFPYU5jOXZiSS1CS1dHaXd3dnBXaWtfaVI2OUZGSktUUllZVVl0TXdVQ2VBQ1dG?oc=5",
+   "source": "Google News: \"seed\" OR \"Series A\" AI startup Amsterdam OR Netherlands raises when:30d",
+   "amount": ""
+  },
+  "corma": {
+   "company": "Corma",
+   "announced": "2026-11-16",
+   "headline": "Corma Raises $125M Series A at $1B Valuation to Scale Defensive AI",
+   "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxQc2g3Sm1FOGRpLXZrRFg5QnV2VHZKUDFMY3VxOUtvcjE1TmlVck9feVVwMmVzMnUwUXpoenRwMkMtdEk2bDh2ZUI2ZlNmNExaQy1rd3FxdVNhcks0UEU0emFYOXZIb2pSTDJBTzBRRHZERFFlT3o4NFRnUmFjbnlRZjVkU3poREU5YkdYWXc3VQ?oc=5",
+   "source": "Google News: \"seed\" OR \"Series A\" AI startup Amsterdam OR Netherlands raises when:30d",
+   "amount": "$125M"
+  },
+  "everful": {
+   "company": "Everful",
+   "announced": "2026-11-19",
+   "headline": "Everful Raises $48.5M Series A to Expand AI Commerce Infrastructure",
+   "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPOGFFMDdGZWhkWEM1NDJhU3lXaUhoV212Y0JqYWZHTXZYNFZfT091M0Zyb3laYm1kWXQtVGswajBrR2tEdjJRTzBYcnZFT3BvdmtuRXRnVF9pVE9pZl9YOWJXLXBOXzAxOE1VSnNYMEcxUDUyaC12dEJPemJPZ1E0bDg3VTJHWUM1aFlOQkZCamJGUQ?oc=5",
+   "source": "Google News: \"seed\" OR \"Series A\" AI startup Amsterdam OR Netherlands raises when:30d",
+   "amount": "$48.5M"
   }
  },
  "seen": {
