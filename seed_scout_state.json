@@ -551,6 +551,30 @@
    "link": "https://www.eu-startups.com/2026/11/munich-based-vetaion-raises-e5-7-million-to-automate-control-cabinet-manufacturing-with-ai-and-robotics/",
    "source": "EU-Startups",
    "amount": "€5.7million"
+  },
+  "acorda": {
+   "company": "Acorda",
+   "announced": "2026-11-23",
+   "headline": "London-based Acorda raises €2.15 million to help banks detect payment scams before money moves",
+   "link": "https://www.eu-startups.com/2026/11/london-based-acorda-raises-e2-15-million-to-help-banks-detect-payment-scams-before-money-moves/",
+   "source": "EU-Startups",
+   "amount": "€2.15million"
+  },
+  "holosolis": {
+   "company": "HoloSolis",
+   "announced": "2026-11-23",
+   "headline": "Paris-based HoloSolis raises over €15 million to advance €1 billion solar gigafactory in France",
+   "link": "https://www.eu-startups.com/2026/11/paris-based-holosolis-raises-over-e15-million-to-advance-e1-billion-solar-gigafactory-in-france/",
+   "source": "EU-Startups",
+   "amount": "€15million"
+  },
+  "agon": {
+   "company": "Agon",
+   "announced": "2026-11-23",
+   "headline": "Defence startup Agon raises $70M, with UK's SovAI and NSSIF investing",
+   "link": "https://tech.eu/2026/11/23/defence-startup-agon-raises-70m-with-uk-sovai-and-nssif-investing/",
+   "source": "Tech.eu",
+   "amount": "$70M"
   }
  },
  "seen": {
