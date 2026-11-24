@@ -607,6 +607,70 @@
    "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQbERBY1o2dHAtOGhQUnhKdWdyMFJnbWdaWjFZTnMyTUFBV0U3VVQ2YzdxNVQ1Qm9JdVJTdUU0QmpzSVFMSmpEYmtoYzE4clczN1VBblpkX0tPT3FlUG9jOThQRE9ZYWJJaTY3RnRmVjM2SzJqMk1LOVgyWW1hX1l0ZENGNnV4dXpkOFJhS3JzU0hEelk?oc=5",
    "source": "Google News: \"seed\" OR \"Series A\" AI startup Amsterdam OR Netherlands raises when:30d",
    "amount": "$6M"
+  },
+  "reversa": {
+   "company": "Reversa",
+   "announced": "2026-11-24",
+   "headline": "Reversa raises €750K to automate regulatory processes with AI agents",
+   "link": "https://tech.eu/2026/11/24/reversa-raises-eur750k-to-automate-regulatory-processes-with-ai-agents/",
+   "source": "Tech.eu",
+   "amount": "€750K"
+  },
+  "solutions": {
+   "company": "Solutions",
+   "announced": "2026-11-24",
+   "headline": "Intelligent Legal Solutions secures $11M Series A to expand ProVision platform",
+   "link": "https://tech.eu/2026/11/24/intelligent-legal-solutions-secures-11m-series-a-to-expand-provision-platform/",
+   "source": "Tech.eu",
+   "amount": "$11M"
+  },
+  "ils": {
+   "company": "ILS",
+   "announced": "2026-11-24",
+   "headline": "ILS raises $11M Series A co-led by Aquiline and BlackFin to expand legaltech platform for private funds",
+   "link": "https://techfundingnews.com/ils-raises-11m-series-a-co-led-by-aquiline-and-blackfin-to-expand-legaltech-platform-for-private-funds/",
+   "source": "Tech Funding News",
+   "amount": "$11M"
+  },
+  "nanoforge ai": {
+   "company": "NanoForge AI",
+   "announced": "2026-11-12",
+   "headline": "NanoForge AI Raises $9.9 Million Seed Round for AI Materials Design",
+   "link": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE1jSTE5OUluaWNmc1ZTM3VCcGRUUS1OWkJKUloyb0lzMGdhSDItR1o3WTF1MEFfcFUtTXZYWE9KRTE5OV9sOGY4bmNBSUNtUEV0ajFyRFU3RHA3UEhFdHc?oc=5",
+   "source": "Google News: \"seed round\" AI startup London OR UK raises when:14d",
+   "amount": "$9.9Million"
+  },
+  "photosynth ai": {
+   "company": "Photosynth AI",
+   "announced": "2026-11-18",
+   "headline": "Photosynth AI (t/a Perry AI) secures £1.67 million Seed funding led by Haatch alongside Antler, Araya Ventures and Syncorp Ventures",
+   "link": "https://news.google.com/rss/articles/CBMi-wFBVV95cUxNc2hQUkI1eTB0WlMwbVAteUdDRUNIdU5qdFZaQ2JKTHdrako4NFNFaGN4aG1aYnhtYVhuUGxxNGlkTTZuUFRQNVl6aW5leElXQTNQbnlfb3VFdUFzWXVwaEFmdkhNQ3UzYngtbTZ1QlprVko2ZzdrSTduaGgwcFRMaV9QRDNETjJnTzV3Tk04amFyZVFSZnN1YkRmY0FsdUdteFBhMzJWdHhwZm0yR0tLakZpZDRVZjZERUJncEY4Zl90YVY3MUNoRXU1SHJPZVVGTmpCWjhfMFNQUk1wMDNjdWlhV3Q4dnJac3NWVGJyRGQwM1pSMk90Uk5Hdw?oc=5",
+   "source": "Google News: \"seed round\" AI startup London OR UK raises when:14d",
+   "amount": "£1.67million"
+  },
+  "lemonpeel": {
+   "company": "Lemonpeel",
+   "announced": "2026-11-17",
+   "headline": "Lemonpeel Raises $1 Million in Pre-Seed Round Led by Shastra VC to Build AI Video Production Infrastructure",
+   "link": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxQa0ZJQzBCODNoNnRQc21xR0VucVR6MUJ1ei1IWnNlN3JRNlZ1cGV5MGdBajlGVUZJOURnOFoxczNwMy1aNzVjNXdyaGRnYWctOWRNZTdUYTBiZDR2SHRqUkpISEpoSVQ1RWd4MHYzaXNKTzkzSzJoM0JXbWhXckVWV2NEemVGa1h1Q3ZvTExWZkhMSl8yNklQSTdob0pPQmQ0QkZtWXcxNUhQeXJJazdHYk9ST3dBM04zZnBibTdCbmp1bWFTcGMyYmpsLVp3eEJUOWVSNUhlOGxvZEh4SHZOcQ?oc=5",
+   "source": "Google News: \"seed round\" AI startup London OR UK raises when:14d",
+   "amount": "$1Million"
+  },
+  "remanence": {
+   "company": "Remanence",
+   "announced": "2026-11-18",
+   "headline": "Remanence Raises $30M Seed to Post-Train Open-Weight Models",
+   "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxQYi0waFlubjlDM0VKTHd2REtqdklWT252MTlnOUVWNmNoZVBORGp2MGxURnFRWEtoU1RGQmxQVHhMQllkbzZ2TG1CODVnMjBDQjdxdV80MjVhTWtsWE50c2NZZ05YbGJGOW1ud0dLLVkzdWJwaTZqQTZyM1Y0MjRaU3FTd3ZjNnljdGtFbGxsRQ?oc=5",
+   "source": "Google News: \"seed round\" AI startup London OR UK raises when:14d",
+   "amount": "$30M"
+  },
+  "supertake": {
+   "company": "Supertake",
+   "announced": "2026-11-24",
+   "headline": "Supertake Raises $20M Seed, Adds Ex-Coinbase AI Leaders as CEO and CTO",
+   "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxNc29HNVpaOTF1S0Z6Zkp4TExGSjBINFpBZThPR1RYbC1qWW5YdE5oTzVDX250WnVMaWxMWWdRZW5KdldLOGs4WjBXc3VvSGpQRUYtenlJS3FxZDc2NU9CLXdSbjVMblJ6T3o3OXVSNzkzaHRmWWVvcEd2ZVVwOFM3dk9qXzYyaFBGSEw1Vkllb25kU1ZY?oc=5",
+   "source": "Google News: \"seed\" OR \"Series A\" AI startup Amsterdam OR Netherlands raises when:30d",
+   "amount": "$20M"
   }
  },
  "seen": {
