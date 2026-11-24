@@ -706,7 +706,8 @@
   "thgingenuity|graduatejuniordatascientist": "2026-11-18",
   "efinancialcareers|agenticaiengineerassistantvicepresidentciti": "2026-11-18",
   "wehrtyou|researchengineer": "2026-11-19",
-  "efinancialcareers|machinelearningresearcherawardwinningglobalmarketmaker": "2026-11-19"
+  "efinancialcareers|machinelearningresearcherawardwinningglobalmarketmaker": "2026-11-19",
+  "efinancialcareers|juniorgolangengineergenerativeaiplatformsciti": "2026-11-24"
  },
  "notified": [
   "433|jraiengineer",
@@ -716,6 +717,7 @@
   "efinancialcareers|aiengineerpythonavpciti",
   "efinancialcareers|appliedaiengineerequitiesdesksselbyjennings",
   "efinancialcareers|forwarddeployedengineeravpciti",
+  "efinancialcareers|juniorgolangengineergenerativeaiplatformsciti",
   "efinancialcareers|juniorsoftwareengineergenerativeaiplatformsciti",
   "efinancialcareers|machinelearningquantresearcher",
   "efinancialcareers|machinelearningresearchengineerhongkonglondonglobaltrading",
@@ -745,7 +747,7 @@
  ],
  "cache": {
   "yc": {
-   "at": 1795486492.2919996,
+   "at": 1795564560.699582,
    "rows": []
   }
  }
