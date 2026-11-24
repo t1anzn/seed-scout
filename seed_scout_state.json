@@ -575,6 +575,38 @@
    "link": "https://tech.eu/2026/11/23/defence-startup-agon-raises-70m-with-uk-sovai-and-nssif-investing/",
    "source": "Tech.eu",
    "amount": "$70M"
+  },
+  "arva ai": {
+   "company": "Arva AI",
+   "announced": "2026-11-20",
+   "headline": "Arva AI Raises $20M Series A to Automate Financial Crime Compliance at Banks",
+   "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE95UEl3YUE2M3ZfMVR3TjJNUW9BN2VsVFdJaWgxNGZfRFloZy1hb1ltLXZDRk9PUFhiSGlIWkw0TWRIVXViMHlXekJ2VDkxV2RXMng4?oc=5",
+   "source": "Google News: \"Series A\" AI startup London OR UK raises when:14d",
+   "amount": "$20M"
+  },
+  "embo": {
+   "company": "Embo",
+   "announced": "2026-11-24",
+   "headline": "Embo Raises $110M Seed Round to Develop World Models for Robots",
+   "link": "https://news.google.com/rss/articles/CBMiogFBVV95cUxNQkFqZXhjUTZBMkEzZUlOU21vbEJQeWxtOTByeG11NlQ5RkExSnpZcXFYbmlxVE9nbVAtZFdYNzVENS1KNW5CRWRuTlJlQks5VjN5dURtN3FWT2h5SlIwMnVOak14clF2TTNMLXdSMnlkOGJQaE9PUExYbmdjN2xIdUMxdm1NWWNQTVN3NHdGX2pycmpuZlVpVm1fajZwa1Zncmc?oc=5",
+   "source": "Google News: \"seed\" OR \"Series A\" AI startup Amsterdam OR Netherlands raises when:30d",
+   "amount": "$110M"
+  },
+  "marlowe": {
+   "company": "Marlowe",
+   "announced": "2026-11-23",
+   "headline": "Marlowe Raises $277M Seed to Build Multi-Silicon AI Factories",
+   "link": "https://news.google.com/rss/articles/CBMiigFBVV95cUxNQ3drWktyc2cwWHR2d1QzV1NRTDgwMDNrSWdTMGxlRGpaWlEwXzBraEw0WlZuRldTQjY0MW15bVAtOUEyelA5WnkxOTg1dmZWeGxiRjNhWmhXVW8yUHQ1UTU3WWkzRTJZREE2bDZ2UFNKVk1MUmdjbl80QS1rRUQ2UDZxNjNQUmZzbWc?oc=5",
+   "source": "Google News: \"seed\" OR \"Series A\" AI startup Amsterdam OR Netherlands raises when:30d",
+   "amount": "$277M"
+  },
+  "coprod": {
+   "company": "Coprod",
+   "announced": "2026-11-23",
+   "headline": "Coprod Raises $6M Pre-Seed to Bring Modular Robot Hardware to Market",
+   "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQbERBY1o2dHAtOGhQUnhKdWdyMFJnbWdaWjFZTnMyTUFBV0U3VVQ2YzdxNVQ1Qm9JdVJTdUU0QmpzSVFMSmpEYmtoYzE4clczN1VBblpkX0tPT3FlUG9jOThQRE9ZYWJJaTY3RnRmVjM2SzJqMk1LOVgyWW1hX1l0ZENGNnV4dXpkOFJhS3JzU0hEelk?oc=5",
+   "source": "Google News: \"seed\" OR \"Series A\" AI startup Amsterdam OR Netherlands raises when:30d",
+   "amount": "$6M"
   }
  },
  "seen": {
@@ -649,7 +681,7 @@
  ],
  "cache": {
   "yc": {
-   "at": 1795376357.4062545,
+   "at": 1795486492.2919996,
    "rows": []
   }
  }
