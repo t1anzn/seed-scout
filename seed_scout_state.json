@@ -679,6 +679,22 @@
    "link": "https://techfundingnews.com/ex-deepmind-researchers-sequent-raises-2-2m-to-prove-software-safe-with-ai-found-maths/",
    "source": "Tech Funding News",
    "amount": "$2.2M"
+  },
+  "009": {
+   "company": "009",
+   "announced": "2026-11-25",
+   "headline": "Saudi AI startup 009 raises $1.4 million pre-seed led by Outliers Venture Capital",
+   "link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQSnVQOGJPMzE0T1BUbFFrSW1qN2liNmxZVG93My1aYjVPbGlfLXFadUtwdTZ6a0cwbm51Z3p5ZUdIOGRnVjR1YlZaOUdqcVF0enVxNVFWbWF6OXRyaDdhV2ZXUWtjS2NxT0pBZE5KcFVyN2lwSEt2aW56dmYwU24xQ0NfSk9kVUlMTFNEU29hUVJfTzVER08zLU85RkJYbkxYX19hLTVia3dxOHM?oc=5",
+   "source": "Google News: \"seed\" OR \"Series A\" AI startup Amsterdam OR Netherlands raises when:30d",
+   "amount": "$1.4million"
+  },
+  "maple": {
+   "company": "Maple",
+   "announced": "2026-11-24",
+   "headline": "Maple Raises $5.3M Seed to Build a Privacy-Focused Cloud AI Agent",
+   "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxNY01iYTl1MkFreUlwTmpHeXhjekdHZE82UmFIcktWOWY4TjQ3QXJOc0VRQ3RJWkJJd2RBODNKLXo2VnFNdWNWMWhxOFNOR2ZWZmZRdDZjM3pLNmpZZGJGejVBbF9NcUN6dlVIU2tsa3N0Qk41c0hUVjcwdVNSNG9zbjBRUnpFTm8zRmpIX3Azbw?oc=5",
+   "source": "Google News: \"seed\" OR \"Series A\" AI startup Amsterdam OR Netherlands raises when:30d",
+   "amount": "$5.3M"
   }
  },
  "seen": {
