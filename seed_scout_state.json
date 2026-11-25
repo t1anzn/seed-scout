@@ -671,6 +671,14 @@
    "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxNc29HNVpaOTF1S0Z6Zkp4TExGSjBINFpBZThPR1RYbC1qWW5YdE5oTzVDX250WnVMaWxMWWdRZW5KdldLOGs4WjBXc3VvSGpQRUYtenlJS3FxZDc2NU9CLXdSbjVMblJ6T3o3OXVSNzkzaHRmWWVvcEd2ZVVwOFM3dk9qXzYyaFBGSEw1Vkllb25kU1ZY?oc=5",
    "source": "Google News: \"seed\" OR \"Series A\" AI startup Amsterdam OR Netherlands raises when:30d",
    "amount": "$20M"
+  },
+  "sequent": {
+   "company": "Sequent",
+   "announced": "2026-11-25",
+   "headline": "Ex-DeepMind researcher’s Sequent raises $2.2M to prove software safe with AI-found maths",
+   "link": "https://techfundingnews.com/ex-deepmind-researchers-sequent-raises-2-2m-to-prove-software-safe-with-ai-found-maths/",
+   "source": "Tech Funding News",
+   "amount": "$2.2M"
   }
  },
  "seen": {
@@ -707,11 +715,13 @@
   "efinancialcareers|agenticaiengineerassistantvicepresidentciti": "2026-11-18",
   "wehrtyou|researchengineer": "2026-11-19",
   "efinancialcareers|machinelearningresearcherawardwinningglobalmarketmaker": "2026-11-19",
-  "efinancialcareers|juniorgolangengineergenerativeaiplatformsciti": "2026-11-24"
+  "efinancialcareers|juniorgolangengineergenerativeaiplatformsciti": "2026-11-24",
+  "bpukretailcareers|datascientist": "2026-11-25"
  },
  "notified": [
   "433|jraiengineer",
   "aecom|appliedaiengineer",
+  "bpukretailcareers|datascientist",
   "efinancialcareers|agenticaiengineerassistantvicepresidentciti",
   "efinancialcareers|aiengineerplatformcrisil",
   "efinancialcareers|aiengineerpythonavpciti",
