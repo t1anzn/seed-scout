@@ -711,6 +711,54 @@
    "link": "https://news.google.com/rss/articles/CBMid0FVX3lxTE10ei1KSE1ZbXFyYmYtRUFNbUdDTWZZeTFSa1h3WUhLY1Z3MEhLa1k4YkE3aGFra3h3Ni1UVU1jQWpxMHVsbWlLaXo5RUpXcU5ZdU5LUkNJSk9YVlFuSldESmJFeE1DY09ieFhrNE5BZG9HX042d2Vn?oc=5",
    "source": "Google News: \"seed round\" AI startup London OR UK raises when:14d",
    "amount": "$1.05m"
+  },
+  "starforge": {
+   "company": "Starforge",
+   "announced": "2026-11-26",
+   "headline": "Munich fusion startup Starforge raises €6.6M to build compact reactors on production lines",
+   "link": "https://techfundingnews.com/munich-fusion-startup-starforge-raises-e6-6m-to-build-compact-reactors-on-production-lines/",
+   "source": "Tech Funding News",
+   "amount": "€6.6M"
+  },
+  "permut": {
+   "company": "Permut",
+   "announced": "2026-11-26",
+   "headline": "Barcelona-based Permut raises €3 million seed round to expand into new European markets",
+   "link": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxOeHhKbUU4SWl6c1prZTZMU1VoN0kwTFdzMl9Od3o3T1Y0cmQ0UjJGZFlrQkFLWEp2b21uZThYR2llLVN0dXU3UEZfM1lWVXVmM2sySlltdkZDUGM1QW5WdXowTzRRcjY2MHh3S0RXVjFMLUw5c3ZKWFljMWw3SExtOW9tM0R6cDZOWTNPcEJYMThDYXBXcGJ4UGMxbk9BblF1czdXaWV4VXpyUTNXenJhZ0FhRU12a0tzMkpMZHF1OUIxQmJnWFhkaFNuS1RwVTJXeXdxOA?oc=5",
+   "source": "Google News: \"seed round\" AI startup London OR UK raises when:14d",
+   "amount": "€3million"
+  },
+  "ikkb": {
+   "company": "IKKB",
+   "announced": "2026-11-26",
+   "headline": "IKKB Raises $3M Seed Round Led by Canary",
+   "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxNUmVGbXdtekR3cFRNVS1CRmhnTUdSX0w5WktmMVhjbmotYUlMM2xqa3VERDFiVXIyX3hfeWZDUlU2U3JaeWlGMVo5cE94UmdkMGlON2xoV0NLYTJySEtfWUxfempyWk5zN3V6V0tuSDBQZ2k3SHlvLWJNaTQySkdVUFR1cWRLNzFq?oc=5",
+   "source": "Google News: \"seed round\" AI startup London OR UK raises when:14d",
+   "amount": "$3M"
+  },
+  "every": {
+   "company": "Every",
+   "announced": "2026-11-25",
+   "headline": "Every Raises $17.5M Series A at $110M Valuation to Help Teams Adopt AI",
+   "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxPaVl6WFI4WmZ1Wm1iR21oUWdxQ08tNUF3WFZtbkthRC1NNHdWUFkzZTJjX1MwOHFXTDhvSFdMOGs5TEtrYnpfSUxDS2FndGdLVGx5eGljSl9HZ3czZUlDN3BnVVR3dWw3MHlTR2xVQ0pKNHJfNWE0M2d3ZTJzTktvdmt3WjA0UTFsd3dMN1BlWG9uWlZC?oc=5",
+   "source": "Google News: \"seed\" OR \"Series A\" AI startup Amsterdam OR Netherlands raises when:30d",
+   "amount": "$17.5M"
+  },
+  "lute": {
+   "company": "Lute",
+   "announced": "2026-11-25",
+   "headline": "Lute Raises $20M Across Pre-Seed and Seed to Scale Physical AI",
+   "link": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxQbmUtM2xCNVhDYnptWkliZWhwdUNIZGQtbTF4cW1PLWlXcENYUjBSRWh2Mjg4b2ozZWJBa24zLVh1Z0JreHpxSDNwMGFWT3B5ZklKUXZkSVNwbU5rUXRiTWN3VTlwX24xYzVVRW15cmxWc21kcndOeTl0bDNZVWU0WEVsN3RJQV9zRGgw?oc=5",
+   "source": "Google News: \"seed\" OR \"Series A\" AI startup Amsterdam OR Netherlands raises when:30d",
+   "amount": "$20M"
+  },
+  "graphon labs": {
+   "company": "Graphon Labs",
+   "announced": "2026-11-10",
+   "headline": "Graphon Labs raises $35m Series A to stop AI agents forgetting",
+   "link": "https://news.google.com/rss/articles/CBMieEFVX3lxTE4tanotOHRVOVVDZzlhUDFsdk9RaW5uX1c4XzFKU2JyVG5BTG1JanYtT3EtWS05TlMwSzQ2OGVsRHhKdl9qNFdwVTdTbmxmY2NMY0MyWkZsQ0FnVFQwd3JEMVhGY25TLWxvLWVmSGR2c20tWFZ4UU0wTw?oc=5",
+   "source": "Google News: \"seed\" OR \"Series A\" AI startup Amsterdam OR Netherlands raises when:30d",
+   "amount": "$35m"
   }
  },
  "seen": {
@@ -748,12 +796,14 @@
   "wehrtyou|researchengineer": "2026-11-19",
   "efinancialcareers|machinelearningresearcherawardwinningglobalmarketmaker": "2026-11-19",
   "efinancialcareers|juniorgolangengineergenerativeaiplatformsciti": "2026-11-24",
-  "bpukretailcareers|datascientist": "2026-11-25"
+  "bpukretailcareers|datascientist": "2026-11-25",
+  "capgemini|datascientist": "2026-11-26"
  },
  "notified": [
   "433|jraiengineer",
   "aecom|appliedaiengineer",
   "bpukretailcareers|datascientist",
+  "capgemini|datascientist",
   "efinancialcareers|agenticaiengineerassistantvicepresidentciti",
   "efinancialcareers|aiengineerplatformcrisil",
   "efinancialcareers|aiengineerpythonavpciti",
