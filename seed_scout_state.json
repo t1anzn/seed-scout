@@ -759,6 +759,22 @@
    "link": "https://news.google.com/rss/articles/CBMieEFVX3lxTE4tanotOHRVOVVDZzlhUDFsdk9RaW5uX1c4XzFKU2JyVG5BTG1JanYtT3EtWS05TlMwSzQ2OGVsRHhKdl9qNFdwVTdTbmxmY2NMY0MyWkZsQ0FnVFQwd3JEMVhGY25TLWxvLWVmSGR2c20tWFZ4UU0wTw?oc=5",
    "source": "Google News: \"seed\" OR \"Series A\" AI startup Amsterdam OR Netherlands raises when:30d",
    "amount": "$35m"
+  },
+  "lupa robotics": {
+   "company": "Lupa Robotics",
+   "announced": "2026-11-26",
+   "headline": "Lupa Robotics raises $1.67 million seed round to teach robots human dexterity",
+   "link": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxQX0w3RXBKeG8zbHUwM0RLblg0SUJCcVZvN1ZvZTA3T2IwSmtrOGlka2lORXZMOHdrUUxxSnFYWmc1eE15N2Z4NFpnR2ZGaEJJeHRkV3Jid3pHaUlDZU81d2lNX09xdzdrUjgtVEdrS1dOejRCMzFoaEt3RnFGcVVWVmtqbHZLSlJ3QXltbWNOcnFWTG9oYjFpMDZxSWEyZF9hRE9wTWpyaU9VQQ?oc=5",
+   "source": "Google News: \"seed round\" AI startup London OR UK raises when:14d",
+   "amount": "$1.67million"
+  },
+  "xebo.ai": {
+   "company": "XEBO.ai",
+   "announced": "2026-11-26",
+   "headline": "XEBO.ai Raises $10.5M Series A to Expand Agentic AI and Analytics",
+   "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOMGJLM1dSU0pfN3otZGdjWGM0NzZsSjhIUXhpcDlrRXkxTzNMQjB6YWhCX0lIMmVxdlNEMWNEOU5EV2VNa3JmeDVCbkc1VzdlYXNwWlRXbEZYa2tiTjZKdzBIRHFqYUxxMC1lTUlrUXRraVQtd1l0SlhobGkyNFRFZWdpbHpQX0JDR0JXNHk0NA?oc=5",
+   "source": "Google News: \"seed\" OR \"Series A\" AI startup Amsterdam OR Netherlands raises when:30d",
+   "amount": "$10.5M"
   }
  },
  "seen": {
@@ -839,7 +855,7 @@
  ],
  "cache": {
   "yc": {
-   "at": 1795664157.0760453,
+   "at": 1795744065.7998288,
    "rows": []
   }
  }
