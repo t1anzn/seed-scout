@@ -775,6 +775,38 @@
    "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOMGJLM1dSU0pfN3otZGdjWGM0NzZsSjhIUXhpcDlrRXkxTzNMQjB6YWhCX0lIMmVxdlNEMWNEOU5EV2VNa3JmeDVCbkc1VzdlYXNwWlRXbEZYa2tiTjZKdzBIRHFqYUxxMC1lTUlrUXRraVQtd1l0SlhobGkyNFRFZWdpbHpQX0JDR0JXNHk0NA?oc=5",
    "source": "Google News: \"seed\" OR \"Series A\" AI startup Amsterdam OR Netherlands raises when:30d",
    "amount": "$10.5M"
+  },
+  "korben": {
+   "company": "Korben",
+   "announced": "2026-11-27",
+   "headline": "Profitable French startup Korben raises €10.2 million to give Europe control over its robots’ brains",
+   "link": "https://www.eu-startups.com/2026/11/profitable-french-startup-korben-raises-e10-2-million-to-give-europe-control-over-its-robots-brains/",
+   "source": "EU-Startups",
+   "amount": "€10.2million"
+  },
+  "synature": {
+   "company": "Synature",
+   "announced": "2026-11-26",
+   "headline": "Swiss startup Synature secures €5.48 million to turn animal sounds into actionable biodiversity data using AI",
+   "link": "https://www.eu-startups.com/2026/11/swiss-startup-synature-secures-e5-48-million-to-turn-animal-sounds-into-actionable-biodiversity-data-using-ai/",
+   "source": "EU-Startups",
+   "amount": "€5.48million"
+  },
+  "watersense": {
+   "company": "WaterSense",
+   "announced": "2026-11-26",
+   "headline": "Warsaw-based WaterSense secures €5.75 million to make sense of Europe’s water using AI and satellite data",
+   "link": "https://www.eu-startups.com/2026/11/warsaw-based-watersense-secures-e5-75-million-to-build-and-scale-water-intelligence-infrastructure-across-europe/",
+   "source": "EU-Startups",
+   "amount": "€5.75million"
+  },
+  "ark capture solutions": {
+   "company": "ARK Capture Solutions",
+   "announced": "2026-11-26",
+   "headline": "ARK Capture Solutions raises over €5.4 million to scale all-electric CO2 capture from industrial flue gases",
+   "link": "https://www.eu-startups.com/2026/11/ark-capture-solutions-raises-over-e5-4-million-to-scale-all-electric-co2-capture-from-industrial-flue-gases/",
+   "source": "EU-Startups",
+   "amount": "€5.4million"
   }
  },
  "seen": {
