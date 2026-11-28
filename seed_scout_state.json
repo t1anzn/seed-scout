@@ -813,7 +813,8 @@
   "efinancialcareers|machinelearningresearcherawardwinningglobalmarketmaker": "2026-11-19",
   "efinancialcareers|juniorgolangengineergenerativeaiplatformsciti": "2026-11-24",
   "bpukretailcareers|datascientist": "2026-11-25",
-  "capgemini|datascientist": "2026-11-26"
+  "capgemini|datascientist": "2026-11-26",
+  "prosus|juniordataaiengineerfinance": "2026-11-28"
  },
  "notified": [
   "433|jraiengineer",
@@ -849,13 +850,14 @@
   "itolrecruit|junioraideveloper",
   "itolrecruit|traineeaiengineer",
   "marshallwolfe|datascientist",
+  "prosus|juniordataaiengineerfinance",
   "thgingenuity|graduatejuniordatascientist",
   "wehrtyou|researchengineer",
   "wheely|associatedatascientistoperationsresearch"
  ],
  "cache": {
   "yc": {
-   "at": 1795744065.7998288,
+   "at": 1795852194.4142249,
    "rows": []
   }
  }
